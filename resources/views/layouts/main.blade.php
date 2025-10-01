@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <title>{{ $title ?? 'E-Learning' }}</title>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <ul>
+                <li><a href="">Courses</a></li>
+                <li><a href="">My Courses</a></li>
+               
+            </ul>
+        </nav>
+        <div class="user-actions">
+           
+        </div>
+    </header>
+
+    <main>
+        @yield('content')
+
+
+
+    </main>
+
+    <footer>
+        Part of Project
+    </footer>
+
+
+
+</body>
+
+</html>
