@@ -4,5 +4,6 @@
 @section('content')
 
 <b>Hello Hi</b>
+<b>Hello a</b>
     
 @endsection
