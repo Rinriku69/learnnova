@@ -9,8 +9,8 @@ Route::get('/', function () {
 
 
 Route::controller(HomeController::class)
-->prefix('/home')
-->name('home.')
-->group(static function():void{
-route::get('','home')->name('main');
-});
+    ->prefix('/home')
+    ->name('home.')
+    ->group(static function (): void {
+        route::get('', 'home')->name('main');
+    });

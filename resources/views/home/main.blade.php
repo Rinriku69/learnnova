@@ -3,6 +3,6 @@
 
 @section('content')
 
-<b>Hello</b>
+<b>Hello JAA</b>
     
 @endsection
