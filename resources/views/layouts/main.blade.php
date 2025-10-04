@@ -14,9 +14,10 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{{ route('home.main') }}">Courses</a></li>
+                <li><a href="{{ route('home.main') }}">Home</a></li>
+                <li><a href="{{ route('courses.course-info') }}">Courses</a></li>
                 <li><a href="{{ route('my-courses.my-courses') }}">My Courses</a></li>
-               
+                <li><a href="{{ route('manage.manage') }}">Manage</a></li>
             </ul>
         </nav>
         <div class="user-actions">
