@@ -8,6 +8,6 @@ use Illuminate\View\View;
 class MyCoursesController extends Controller
 {
     function MyCourses(){
-        return View('courses.my-courses');
+        return View('my-course.my-courses');
     }
 }
