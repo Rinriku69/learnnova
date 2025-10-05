@@ -4,14 +4,21 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    public function courses(): HasMany {
+    public function CourseAsExpert(): HasMany {
         return $this->hasMany(Course::class, 'user_id');
+    }
+
+    function CourseAsStudent() : BelongsToMany{
+        return $this
+        ->belongsToMany(Course::class)
+        ->withTimestamps();
     }
 
     /** @use HasFactory<\Database\Factories\UserFactory> */

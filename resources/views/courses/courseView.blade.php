@@ -10,6 +10,8 @@
                     <div class="app-cmp-cou-pro">
                         <b>{{ $course->code }}</b>
                         <b>{{ $course->name }}</b>
+                        <br>
+                        <p>Course by : {{$course->expert->name}}</p>
                     </div>
                     <div class="app-cmp-cou-desc">
                         <pre>

@@ -47,19 +47,16 @@
             @endguest
 
         </nav>
-        <div class="notification">
-            @session('status')
-                <div role="status">
-                    {{ $value }}
-                </div>
-            @endsession
-        </div>
+      
 
     </header>
 
     <main>
         <header>
             @yield('header')
+            @session('status')
+                <b>{{$value}}</b>
+            @endsession
         </header>
         @yield('content')
 

@@ -63,10 +63,12 @@ Route::middleware([
 
         ->group(static function (): void {
             route::get('', 'courseList')->name('list');
+            route::get('/create', 'CourseCreateForm')->name('createForm');
+            route::post('', 'CourseCreate')->name('create');
            
             Route::name('myCourse.') // My course
                 ->group(static function (): void {
-                    route::get('/myCourse', 'courseList')->name('list');
+                    route::get('/myCourse', 'mycourseList')->name('list');
                 });  
 
             Route::prefix('/{courseCode}')->group(static function (): void { 
