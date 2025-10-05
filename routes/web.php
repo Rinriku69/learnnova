@@ -81,7 +81,10 @@ Route::controller(CourseController::class)
     ->name('courses.')
     ->group(static function (): void {
         route::get('', 'Course')->name('course-info');
-        route::get('course', 'CourseDesc')->name('course-desc');
+
+        route::prefix('/{courseCode}')->group(static function (): void {
+            route::get('', 'CourseDesc')->name('course-desc');
+        });
     });
 
 Route::controller(MyCoursesController::class)
@@ -95,5 +98,5 @@ Route::controller(ManageController::class)
     ->prefix('/manage')
     ->name('manage.')
     ->group(static function (): void {
-        route::get('','Manage')->name('manage');
+        route::get('', 'Manage')->name('manage');
     });
