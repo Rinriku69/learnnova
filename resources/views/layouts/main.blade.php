@@ -10,7 +10,7 @@
 
 <body>
 
-    <header>
+    <header class="nav">
         <nav>
             <ul>
                 <li><a href="{{ route('home.main') }}">Home</a></li>
