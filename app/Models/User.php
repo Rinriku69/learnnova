@@ -32,6 +32,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'password',
+        'img'
     ];
 
     /**
@@ -60,5 +61,13 @@ class User extends Authenticatable
     function isAdministrator(): bool
     {
         return $this->role === 'ADMIN';
+    }
+     function isExpert(): bool
+    {
+        return $this->role === 'EXPERT';
+    }
+     function isStudent(): bool
+    {
+        return $this->role === 'USER';
     }
 }

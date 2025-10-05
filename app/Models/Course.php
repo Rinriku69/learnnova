@@ -21,8 +21,6 @@ class Course extends Model
         ->withTimestamps();
     }
 
-     function isAdministrator(): bool
-    {
-        return $this->role === 'ADMIN';
-    }
+    
+    
 }

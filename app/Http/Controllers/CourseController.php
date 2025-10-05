@@ -58,4 +58,26 @@ class CourseController extends Controller
     ,['courses'=>$course]);
     }
 
+    function CourseUpdateForm(string $courseCode): view{
+        $course = Course::where('code',$courseCode)
+        ->firstorfail();
+        
+        return view('courses.updateForm'
+    ,['course'=>$course]);
+    }
+
+    function CourseUpdate(ServerRequestInterface $request, string $couseCode) : RedirectResponse{
+        $data = $request->getParsedBody();
+        $course = Course::where('code',$couseCode)
+        ->firstorfail();
+
+        $course->fill($data);
+        $course->save();
+
+        return redirect()->route('courses.view',
+        ['courseCode'=> $course->code])
+        ->with('status','Course '.$course->name.' was updated');
+        
+    }
+
 }

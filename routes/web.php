@@ -65,16 +65,16 @@ Route::middleware([
             route::get('', 'courseList')->name('list');
             route::get('/create', 'CourseCreateForm')->name('createForm');
             route::post('', 'CourseCreate')->name('create');
-           
+
             Route::name('myCourse.') // My course
                 ->group(static function (): void {
                     route::get('/myCourse', 'mycourseList')->name('list');
-                });  
-
-            Route::prefix('/{courseCode}')->group(static function (): void { 
-                    route::get('', 'courseView')->name('view');
                 });
 
-           
+            Route::prefix('/{courseCode}')->group(static function (): void {
+                route::get('/view', 'courseView')->name('view');
+                route::get('/updateForm', 'CourseUpdateForm')->name('updateForm');
+                route::post('/update', 'CourseUpdate')->name('update');
+            });
         });
 });
