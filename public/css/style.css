@@ -23,14 +23,17 @@ body {
 }
 
 
-header {
-    background-color: #ffffff;
-    padding: 1rem 2.5rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #dee2e6;
+header.nav {
+    
+        background-color: #ffffff;
+        padding: 1rem 2.5rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #dee2e6;
+    
+
 }
 
 nav ul {
@@ -78,6 +81,7 @@ footer {
 .app-cmp-inf-course {
     border: 1px #333 solid;
 }
+
 .login-page-body {
     align-items: center;
     justify-content: center;
@@ -196,4 +200,8 @@ footer {
 a:hover {
     text-decoration: underline;
     color: var(--primary-hover);
+}
+
+.app-cmp-inf-course {
+    border: 1px #333 solid;
 }

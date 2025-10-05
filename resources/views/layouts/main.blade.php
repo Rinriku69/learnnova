@@ -10,16 +10,19 @@
 
 <body>
 
-    <header>
+    <header class="nav">
         <nav>
             <ul>
                 <li><a href="{{ route('home.main') }}">Home</a></li>
-                <li><a href="{{ route('courses.course-info') }}">Courses</a></li>
-                <li><a href="{{ route('my-courses.my-courses') }}">My Courses</a></li>
-                <li><a href="{{ route('manage.manage') }}">Manage</a></li>
+                <li><a href="{{ route('courses.list') }}">Courses</a></li>
+                @can('mycourse', \App\Models\Course::class)
+                    <li><a href="{{route('courses.myCourse.list')}}">My Courses</a></li>
+                @endcan
+                
                 @can('list', \App\Models\User::class)
                     <li><a href="{{ route('users.list') }}">User</a></li>
                 @endcan
+                
 
             </ul>
         </nav>
@@ -38,6 +41,10 @@
                 </form>
 
             @endauth
+            @guest
+                <a href="{{route('login')}}">
+                        <span>Login</span></a>
+            @endguest
 
         </nav>
         <div class="notification">

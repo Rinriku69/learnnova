@@ -8,13 +8,12 @@
             <div class="wrapper">
                 <div class="app-cmp-cou">
                     <div class="app-cmp-cou-pro">
-                        <b>name</b>
+                        <b>{{ $course->code }}</b>
+                        <b>{{ $course->name }}</b>
                     </div>
                     <div class="app-cmp-cou-desc">
                         <pre>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                            Nisi quaerat aperiam, asperiores dolorem cupiditate temporibus! 
-                            Eius voluptate mollitia voluptatem repellat.
+                            {{ $course->description }}
                         </pre>
                     </div>
                     <button type="submit">Register</button>
