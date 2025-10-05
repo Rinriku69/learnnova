@@ -8,24 +8,24 @@ use Illuminate\View\View;
 
 class CourseController extends Controller
 {
-    Function Course() {
-        return View('courses.course-info');
-    }
-
-    function CourseDesc() {
-        return View('courses.course-desc');
+    function CourseList() : View {
         $course = Course::get();
 
-        return View('courses.course-info', [
+        return View('courses.courseList', [
+            'courses' => $course,
+        ]);
+    }
+
+    function CourseView(string $courseCode) : View {
+        $course = Course::where('code',$courseCode)->firstOrFail();
+
+        return View('courses.courseView', [
             'course' => $course,
         ]);
     }
 
-    function CourseDesc(string $courseCode) {
-        $course = Course::where('code',$courseCode)->firstOrFail();
-
-        return View('courses.course-desc', [
-            'courses' => $course,
-        ]);
+    function myCourseList() : View {
+        return view('myCourse.myCourseList');
     }
+
 }

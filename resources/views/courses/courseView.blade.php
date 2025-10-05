@@ -8,12 +8,12 @@
             <div class="wrapper">
                 <div class="app-cmp-cou">
                     <div class="app-cmp-cou-pro">
-                        <b>{{ $courses->code }}</b>
-                        <b>{{ $courses->name }}</b>
+                        <b>{{ $course->code }}</b>
+                        <b>{{ $course->name }}</b>
                     </div>
                     <div class="app-cmp-cou-desc">
                         <pre>
-                            {{ $courses->description }}
+                            {{ $course->description }}
                         </pre>
                     </div>
                     <button type="submit">Register</button>

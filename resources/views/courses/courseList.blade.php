@@ -6,10 +6,10 @@
     <main>
         <div class="container">
             <div class="wrapper">
-                @foreach($course as $courses)
+                @foreach($courses as $course)
                 <div class="app-cmp-inf-course">
-                    <b>{{$courses->code}} {{$courses->name}}</b>
-                    <a href="{{ route('courses.course-desc',['courseCode' => $courses->code]) }}">View Course</a>
+                    <b>{{$course->code}} {{$course->name}}</b>
+                    <a href="{{ route('courses.view',['courseCode' => $course->code]) }}">View Course</a>
                 </div> 
                 @endforeach
             </div>
