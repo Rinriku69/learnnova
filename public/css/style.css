@@ -197,3 +197,6 @@ a:hover {
     text-decoration: underline;
     color: var(--primary-hover);
 }
+.app-cmp-inf-course {
+    border: 1px #333 solid;
+}

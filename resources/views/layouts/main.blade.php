@@ -16,6 +16,10 @@
                 <li><a href="{{ route('home.main') }}">Home</a></li>
                 <li><a href="{{ route('courses.course-info') }}">Courses</a></li>
                 <li><a href="{{ route('my-courses.my-courses') }}">My Courses</a></li>
+                @can('list', \App\Models\User::class)
+                    <li><a href="{{ route('users.list') }}">User</a></li>
+                @endcan
+
                 <li><a href="{{ route('manage.manage') }}">Manage</a></li>
                 @can('list', \App\Models\User::class)
                     <li><a href="{{ route('users.list') }}">User</a></li>
