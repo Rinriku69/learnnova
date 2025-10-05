@@ -22,7 +22,7 @@
                 @can('list', \App\Models\User::class)
                     <li><a href="{{ route('users.list') }}">User</a></li>
                 @endcan
-                <li><a href="">Manage</a></li>
+                
 
             </ul>
         </nav>
