@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,7 @@ class CourseController extends Controller
     }
 
     function CourseCreateForm() : View{
-        
+        Gate::authorize('courseCreate',Course::class);
         return view('courses.createForm');
         
         
@@ -40,7 +41,7 @@ class CourseController extends Controller
 
     function CourseCreate(ServerRequestInterface $request) : RedirectResponse{
         $data = $request->getParsedBody();
-
+        Gate::authorize('courseCreate',Course::class);
         $course = new Course();
         $course->fill($data);
         $course->save();
@@ -62,7 +63,7 @@ class CourseController extends Controller
     function CourseUpdateForm(string $courseCode): view{
         $course = Course::where('code',$courseCode)
         ->firstorfail();
-        
+        Gate::authorize('courseCreate',$course);
         return view('courses.updateForm'
     ,['course'=>$course]);
     }
@@ -71,7 +72,7 @@ class CourseController extends Controller
         $data = $request->getParsedBody();
         $course = Course::where('code',$couseCode)
         ->firstorfail();
-
+        Gate::authorize('courseCreate',$course);
         $course->fill($data);
         $course->save();
 

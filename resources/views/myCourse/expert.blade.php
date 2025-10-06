@@ -3,7 +3,10 @@
 ])
 
 @section('header')
-<a href="{{route('courses.createForm')}}">Add new course</a>
+@can('create', $courses)
+    <a href="{{route('courses.createForm')}}">Add new course</a>
+@endcan
+
     
 @endsection
 @section('content')

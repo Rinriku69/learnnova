@@ -33,5 +33,13 @@ class CoursePolicy
         }
     }
 
+    function courseCreate(User $user): bool{
+        return $this->courseDelete($user);
+    }
+
+    function courseUpdate(User $user): bool{
+        return $this->courseDelete($user);
+    }
+
 
 }
