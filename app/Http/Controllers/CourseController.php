@@ -6,6 +6,7 @@ use App\Models\Course;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -80,4 +81,13 @@ class CourseController extends Controller
         
     }
 
+
+    function CourseDelete(string $courseCode) : RedirectResponse{
+        $course = Course::where('code',$courseCode)
+        ->FirstOrFail();
+        $course->delete();
+        Gate::authorize('courseDelete',$course);
+        return redirect()->route('courses.myCourse.list')
+        ->with('status','Course '.$course->name.' was deleted');
+    }
 }

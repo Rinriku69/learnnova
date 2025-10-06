@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Course extends Model
 {
-    protected $fillable = ['code', 'name', 'description', 'img', 'users_id',];
+    protected $fillable = ['code', 'name', 'description', 'img', 'user_id',];
 
     public function expert(): BelongsTo
     {

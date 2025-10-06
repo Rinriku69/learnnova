@@ -75,6 +75,7 @@ Route::middleware([
                 route::get('/view', 'courseView')->name('view');
                 route::get('/updateForm', 'CourseUpdateForm')->name('updateForm');
                 route::post('/update', 'CourseUpdate')->name('update');
+                route::post('/delete', 'CourseDelete')->name('delete');
             });
         });
 });

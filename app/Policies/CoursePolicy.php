@@ -24,4 +24,14 @@ class CoursePolicy
     {
         return $user->isStudent();
     }
+
+    function courseDelete(User $user): bool{
+        if($user->isAdministrator()||$user->isExpert()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
 }

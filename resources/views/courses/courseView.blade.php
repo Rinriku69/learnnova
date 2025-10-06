@@ -4,12 +4,15 @@
 
 
 @section('header')
-    @if ($course->expert->id === \Auth::user()->id)
+@auth
+     @if ($course->expert->id === \Auth::user()->id)
         <a href="{{route('courses.updateForm',[
         'courseCode' => $course->code])}}">
             <b>Update Course introduction</b>
         </a>
     @endif
+@endauth
+   
 @endsection
 @section('content')
     <main>
