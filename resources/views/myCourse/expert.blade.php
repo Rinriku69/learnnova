@@ -3,7 +3,7 @@
 ])
 
 @section('header')
-@can('create', $courses)
+@can('courseCreate', \App\Models\Course::class)
     <a href="{{route('courses.createForm')}}">Add new course</a>
 @endcan
 

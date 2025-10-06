@@ -43,17 +43,16 @@ Route::middleware([
             route::get('', 'list')->name('list');
             route::get('/create', 'createForm')->name('create-form');
             route::post('/create', 'create')->name('create');
-
-            Route::prefix('/{user}')->group(static function (): void {
+            Route::name('selves.')->group(static function (): void {
+                route::get('/selvesview', 'selvesview')->name('view');
+                route::get('/selvesupdate/{userID}', 'selvesUpdateForm')->name('updateForm');
+                route::post('/selvesupdate/{userID}', 'selvesUpdate')->name('update');
+            });
+            Route::prefix('/{userID}')->group(static function (): void {
                 route::get('/view', 'view')->name('view');
                 route::post('/delete', 'delete')->name('delete');
                 route::get('/updateForm', 'updateForm')->name('updateForm');
                 route::post('/update', 'update')->name('update');
-            });
-            Route::name('selves.')->group(static function (): void {
-                route::get('/selvesview', 'selvesview')->name('view');
-                route::get('/selvesupdate', 'selvesUpdateForm')->name('updateForm');
-                route::post('/selvesupdate', 'selvesUpdate')->name('update');
             });
         });
 

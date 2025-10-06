@@ -3,7 +3,7 @@
 
 @section('content')
     <form action="{{route('users.update',
-    ['user'=>$user->id])}}" method="POST">
+    ['userID'=>$user->id])}}" method="POST">
         @csrf
         <label >
             <b>Email</b>
@@ -20,6 +20,8 @@
             <select name="role" id="">
                     <option value="USER" @selected($user->role === 'USER')>
                      USER</option>
+                    <option value="EXPERT" @selected($user->role === 'EXPERT')>
+                     EXPERT</option>
                     <option value="ADMIN" @selected($user->role === 'ADMIN')>
                      ADMIN</option>
             </select></label><br>
@@ -33,7 +35,7 @@
         
         <button type="submit">Update</button>
         <a href="{{ route('users.view',
-        ['user' => $user->id])}}">
+        ['userID' => $user->id])}}">
             <button type="button">Cancel</button>
         </a>
     </form>

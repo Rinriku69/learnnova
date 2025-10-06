@@ -70,7 +70,7 @@ class UserController extends Controller
         $user = $this->find($user);
         Gate::authorize('delete',$user);  
         $user->delete();
-        Gate::authorize('delete', User::class);
+       
         return redirect(
             session()->get('bookmarks.user.view', route('users.list'))
         )
@@ -93,7 +93,7 @@ class UserController extends Controller
         ServerRequestInterface $request,
         string $user,
     ): RedirectResponse {
-        Gate::authorize('update', User::class);
+       
         $data = $request->getParsedBody();
         $user = $this->find($user);
         Gate::authorize('update', $user);
@@ -112,7 +112,7 @@ class UserController extends Controller
       
 
         return redirect()->route('users.view', [
-            'user' => $user->id,
+            'userID' => $user->id,
         ])->with('status','User '.$user->name.' was updated');
     }
 
@@ -132,7 +132,7 @@ class UserController extends Controller
         ServerRequestInterface $request,
         string $user,
     ): RedirectResponse {
-        Gate::authorize('update', User::class);
+       
         $data = $request->getParsedBody();
         $user = $this->find($user);
     
@@ -144,7 +144,7 @@ class UserController extends Controller
          if($data['password'] !== null){
             $user->password = $data['password'];
         }else{
-             $user->password = $password;
+            $user->password = $password;
         } 
       
         $user->save();

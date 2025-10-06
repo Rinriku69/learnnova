@@ -1,10 +1,6 @@
 @extends('layouts.main',['title'=> 'User list'])
 
-@section('header')
-    <li class="app-cmp-links">
-        <a href="">New User</a>
-    </li>
-@endsection
+
 
 @section('content')
 <table class="app-cmp-data-list">
@@ -24,7 +20,7 @@
                 <tr>
                     <td>
                         <a
-                            href="{{route('users.view',['user'=>$user->id])}}">
+                            href="{{route('users.view',['userID'=>$user->id])}}">
                             {{ $user->email }}
                         </a>
                     </td>
