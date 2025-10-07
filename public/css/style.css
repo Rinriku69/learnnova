@@ -1,4 +1,4 @@
-/*
+/* 
     --primary-color: #4a90e2;
     --primary-hover: #357ABD;
     --danger-color: #d9534f;
@@ -10,8 +10,7 @@
     --white-color: #ffffff;
 */
 
-
-body {
+/* #app-cmp-body {
     font-family: 'Inter', sans-serif;
     margin: 0;
     background-color: #f8f9fa;
@@ -23,8 +22,7 @@ body {
 }
 
 
-header.nav {
-    
+.app-cmp-header>.app-cmp-header-container {
         background-color: #ffffff;
         padding: 1rem 2.5rem;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -32,11 +30,9 @@ header.nav {
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid #dee2e6;
-    
-
 }
 
-nav ul {
+.app-cmp-link-panel ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -45,7 +41,7 @@ nav ul {
     gap: 2rem;
 }
 
-nav a {
+.app-cmp-link-panel a {
     text-decoration: none;
     color: #4a90e2;
     font-weight: 500;
@@ -53,23 +49,47 @@ nav a {
     padding-bottom: 5px;
     border-bottom: 2px solid transparent;
     transition: color 0.3s ease, border-bottom-color 0.3s ease;
+    &&:hover {
+        text-decoration: none;
+        color: #357ABD;
+        border-bottom-color: #357ABD;
+    }
 }
 
-nav a:hover {
-    color: #357ABD;
-    border-bottom-color: #357ABD;
+.app-cmp-user-panel ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
 }
 
-main {
+.app-cmp-user-panel a {
+    text-decoration: none;
+    color: #4a90e2;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+    &&:hover {
+        text-decoration: none;
+        color: #357ABD;
+        border-bottom-color: #357ABD;
+    }
+} */
+
+/* main {
     flex: 1;
     padding: 2.5rem;
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
-}
+} */
 
-footer {
+/* footer {
     background-color: #343a40;
     padding: 1rem 2.5rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
@@ -77,8 +97,8 @@ footer {
     color: #4a90e2;
     text-align: right;
 }
-
-.app-cmp-inf-course {
+ */
+/* .app-cmp-inf-course {
     border: 1px #333 solid;
 }
 
@@ -147,10 +167,10 @@ footer {
     outline: none;
     border-color: var(--border-focus);
     box-shadow: 0 0 0 3px rgba(67, 104, 250, 0.25);
-}
+}  */
 
 /* --- Buttons --- */
-
+/* 
 .btn,
 .login-button,
 .logout-button {
@@ -204,4 +224,264 @@ a:hover {
 
 .app-cmp-inf-course {
     border: 1px #333 solid;
+} */
+
+/* Anima */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  line-height: 1.15; /* ให้ baseline ที่ค่อนข้างปลอดภัย */
+  -webkit-text-size-adjust: 100%; /* ป้องกันการขยายฟอนต์ในมือถือ */
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: inherit;
+  background: transparent;
+}
+
+@font-face {
+  font-family: 'MINI';
+  src:url('มินิ/MNMINIMON.ttf') format('truetype'),
+  ;
+  font-weight: normal;
+  font-style: normal;
+}
+
+#app-cmp-body {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    rgba(255, 255, 255, 1) 0%,
+    rgba(251, 247, 235, 1) 27%,
+    rgba(255, 173, 102, 1) 66%,
+    rgba(251, 135, 2, 1) 100%
+  );
+  width: 100%;
+  height: auto;
+}
+
+/* Header Bar */
+#app-cmp-body>.app-cmp-header {
+  background-color: #fff4e6;
+  position: relative;
+}
+
+.app-cmp-header-container{
+  width: 100%;
+  height: auto;
+  display: inline-flex;
+  font-family: MINI;
+}
+
+.app-cmp-header-container>h1{
+  display: inline-flex;
+  /* margin: 0 0 0 4rem; */
+  padding-left: 4rem;
+  font-size: 3rem;
+  color: black;
+}
+
+.app-cmp-link-panel{
+  display: flex;
+  margin: auto;
+  padding: auto;
+  justify-self: center;
+  & > :is(ul){
+    display: flex;
+  }
+}
+
+.app-cmp-link-panel>ul>li{
+  margin: 0 20px 0 20px;
+  list-style: none;
+  font-size: 25px;
+  font-weight: bold;
+  & > :is(a){
+    text-decoration: none;
+    margin: 10px;
+    color: #4a90e2;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 1rem;
+    padding: 5px 2rem 5px 2rem;
+  }
+}
+
+.app-cmp-user-panel>a{
+  display: flex;
+  margin: 2.3rem 3rem 0 0;
+  padding: 5px 2rem 5px 2rem;
+  font-size: 1.5rem;
+  text-decoration: none;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 1rem;
+}
+
+.app-cmp-inf-header {
+  display: block;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5rem 2rem;
+
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.bar-vedeo-intro {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.bar-vedeo-intro iframe {
+  width: 80rem;
+  height: 30rem;
+  border-radius: 2rem;
+  object-fit: cover;
+}
+
+.bar-vedeo-intro span {
+  font-family: MINI;
+  font-size: 10rem;
+  font-weight: 600;
+  text-align: right;
+  color: #ff6600;
+  letter-spacing: 1px;
+  margin-left: -15rem;
+}
+
+
+.btn-more {
+  display: flex;
+  justify-self: right;
+  background: linear-gradient(45deg, #ff6600, #ff8800);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-more:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #ff8800, #ffaa00);
+}
+
+
+/* Body */
+.app-cmp-inf{
+  background-color: rgba(255, 255, 255, 0.5); ;
+  backdrop-filter: blur(10rem);
+  padding: 2rem;
+  font-family: MINI;
+}
+
+.app-cmp-inf>.app-cmp-expcourses{
+  width: 100%;
+  height: 100%;
+  margin: 0 0 2rem 0;
+}
+
+.app-cmp-coursdetail {
+  display: flex;
+  gap: 2rem;              
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.app-cmp-coursdetail dt,
+.app-cmp-coursdetail dd {
+  margin: 0;
+  padding: 0;
+}
+.app-cmp-coursdetail dt img {
+  width: auto;          
+  height: 20rem;
+  border-radius: 10px;    
+}
+.app-cmp-coursdetail dt ,
+.app-cmp-coursdetail dd {
+  display: block;
+}
+
+.app-cmp-coursdetail dd {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+  margin-left: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.app-see-courses>a{
+  text-decoration: none;
+  color: white;
+  display: flex;
+  justify-self: right;
+  background: linear-gradient(45deg, #ff6600, #ff8800);
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 5rem;
+  transition: all 0.3s ease;
+}
+
+.app-see-courses>a:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #ff8800, #ffaa00);
+}
+
+/* Footer */
+
+.app-cmp-footer{
+  position: static;
+  display: list-item;
+  font-family: MINI;
+  font-size: 18px;
+  background-color: #fb8702;
+  padding: 0 0 0 5rem;
+  &>:is(h1){
+    font-size: 5rem;
+    color: aliceblue;
+  }
+}
+
+.app-cmp-footer>ul{
+  display: inline-flex;
+  list-style: none;
+  margin: 0 0 0 -3rem ;
+}
+
+.app-f-detai{
+  display: flex;
+  margin-bottom: 2rem;
+}
+.app-f-detai>span{
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  font-size: 1.5rem;
+  color: #9b3a01;
+}
+
+.imgmain{
+  width: 3rem;
+  margin: 0 0 0 2rem;
+}
+
+.imgmains{
+  width: auto;
+  height: 2rem;
+  margin-top: 0.85rem;
+  filter: invert(27%) sepia(91%) 
+          saturate(7479%) hue-rotate(14deg) 
+          brightness(85%) contrast(100%);
+  
 }
