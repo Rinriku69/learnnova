@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
+use Psr\Http\Message\ServerRequestInterface;
 
 class CourseController extends Controller
 {
@@ -17,15 +22,73 @@ class CourseController extends Controller
     }
 
     function CourseView(string $courseCode) : View {
-        $course = Course::where('code',$courseCode)->firstOrFail();
+        $course = Course::where('code',$courseCode)
+        ->with('expert')
+        ->firstOrFail();
 
         return View('courses.courseView', [
             'course' => $course,
         ]);
     }
 
-    function myCourseList() : View {
-        return view('myCourse.myCourseList');
+    function CourseCreateForm() : View{
+        Gate::authorize('courseCreate',Course::class);
+        return view('courses.createForm');
+        
+        
+
     }
 
+    function CourseCreate(ServerRequestInterface $request) : RedirectResponse{
+        $data = $request->getParsedBody();
+        Gate::authorize('courseCreate',Course::class);
+        $course = new Course();
+        $course->fill($data);
+        $course->save();
+        
+        return redirect()->route('courses.list')
+        ->with('status','Course '.$course->name.' was created');
+
+
+    }
+
+    function myCourseList() : View {
+    
+        $course = Course::where('user_id',Auth::user()->id)
+        ->get();
+        return view('myCourse.expert'
+    ,['courses'=>$course]);
+    }
+
+    function CourseUpdateForm(string $courseCode): view{
+        $course = Course::where('code',$courseCode)
+        ->firstorfail();
+        Gate::authorize('courseCreate',$course);
+        return view('courses.updateForm'
+    ,['course'=>$course]);
+    }
+
+    function CourseUpdate(ServerRequestInterface $request, string $couseCode) : RedirectResponse{
+        $data = $request->getParsedBody();
+        $course = Course::where('code',$couseCode)
+        ->firstorfail();
+        Gate::authorize('courseCreate',$course);
+        $course->fill($data);
+        $course->save();
+
+        return redirect()->route('courses.view',
+        ['courseCode'=> $course->code])
+        ->with('status','Course '.$course->name.' was updated');
+        
+    }
+
+
+    function CourseDelete(string $courseCode) : RedirectResponse{
+        $course = Course::where('code',$courseCode)
+        ->FirstOrFail();
+        $course->delete();
+        Gate::authorize('courseDelete',$course);
+        return redirect()->route('courses.myCourse.list')
+        ->with('status','Course '.$course->name.' was deleted');
+    }
 }

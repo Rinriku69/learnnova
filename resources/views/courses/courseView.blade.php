@@ -2,6 +2,18 @@
     'title' => 'description',
 ])
 
+
+@section('header')
+@auth
+     @if ($course->expert->id === \Auth::user()->id)
+        <a href="{{route('courses.updateForm',[
+        'courseCode' => $course->code])}}">
+            <b>Update Course introduction</b>
+        </a>
+    @endif
+@endauth
+   
+@endsection
 @section('content')
     <main>
         <div class="container">
@@ -10,13 +22,18 @@
                     <div class="app-cmp-cou-pro">
                         <b>{{ $course->code }}</b>
                         <b>{{ $course->name }}</b>
+                        <br>
+                        <p>Course by : {{ $course->expert->name }}</p>
                     </div>
                     <div class="app-cmp-cou-desc">
                         <pre>
                             {{ $course->description }}
                         </pre>
                     </div>
+                    @can('register', \App\Models\Course::class)
                     <button type="submit">Register</button>
+
+                    @endcan
                 </div>
             </div>
         </div>

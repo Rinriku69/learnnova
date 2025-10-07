@@ -2,8 +2,8 @@
 ['title' => $user->name])
 
 @section('content')
-    <form action="{{route('users.update',
-    ['user'=>$user->id])}}" method="POST">
+    <form action="{{route('users.selves.update',
+    ['userID'=>$user->id])}}" method="POST">
         @csrf
         <label >
             <b>Email</b>

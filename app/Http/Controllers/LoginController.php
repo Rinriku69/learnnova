@@ -66,6 +66,7 @@ class LoginController extends Controller
         $user->fill($data);
         $user->email = $data['email'];
         $user->role = 'USER';
+        $user->img = 'anonymous.jpg';
         $user->save();
 
         return redirect()->route('login')

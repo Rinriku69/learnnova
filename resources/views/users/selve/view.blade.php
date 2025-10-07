@@ -13,7 +13,7 @@
             
             <li>
                 <a
-                    href="{{route('users.selves.updateForm',['user'=>$user->id])}}">Update</a>
+                    href="{{route('users.selves.updateForm',['userID'=>$user->id])}}">Update</a>
             </li>
             
            
@@ -25,6 +25,7 @@
     {{-- @php
         session()->put('bookmarks.products.view-shops', url()->full());
     @endphp --}}
+    <img src="{{asset('img/user/'.$user->img)}}" alt="Yes">
     <dl>
         <dt>Email</dt>
         <dd>{{ $user->email }}</dd>
