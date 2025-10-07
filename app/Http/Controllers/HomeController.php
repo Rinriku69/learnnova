@@ -10,5 +10,5 @@ class HomeController extends Controller
     function home(){
         return View('home.main');
     }
-    
+
 }
