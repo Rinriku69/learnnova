@@ -5,10 +5,10 @@
 @section('header')
     <div class="app-cmp-inf-header">
         <div class="bar-vedeo-intro">
-            <iframe src="https://www.youtube.com/embed/DzjO4d9nh_k" title="JAVASCRIP" frameborder="0"
+           {{--  <iframe src="https://www.youtube.com/embed/DzjO4d9nh_k" title="JAVASCRIP" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
-            </iframe>
+            </iframe> --}}
             <span>WELCOME TO LEARNNOVA</span>
         </div>
         <button type="button" class="btn-more">See More...</button>

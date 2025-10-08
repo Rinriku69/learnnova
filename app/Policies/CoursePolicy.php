@@ -15,38 +15,49 @@ class CoursePolicy
         //
     }
 
-     
+
 
     function register(User $user): bool
     {
         return $user->isStudent();
     }
 
-    function courseDelete(User $user): bool{
-        if($user->isAdministrator()||$user->isExpert()){
+    function courseDelete(User $user, Course $course): bool
+    {
+        if (!$user->isAdministrator() && !$user->isExpert()) {
+            return false;
+        }
+
+         return !$course->student()->exists();
+    }
+
+    function courseManipulate(User $user): bool
+    {
+        if ($user->isAdministrator() || $user->isExpert()) {
+
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-    function courseCreate(User $user): bool{
-        return $this->courseDelete($user);
+    function courseCreate(User $user): bool
+    {
+        return $this->courseManipulate($user);
     }
 
-    function courseUpdate(User $user): bool{
-        return $this->courseDelete($user);
+    function courseUpdate(User $user): bool
+    {
+        return $this->courseManipulate($user);
     }
 
     function ExpertCourseList(User $user): bool
     {
-        return $this->courseDelete($user);
+        return $this->courseManipulate($user);
     }
 
     function StudentCourseList(User $user): bool
     {
         return $user->isStudent();
     }
-
-
 }

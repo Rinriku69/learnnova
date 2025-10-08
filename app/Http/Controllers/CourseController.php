@@ -105,7 +105,7 @@ class CourseController extends Controller
         ->where('code',$courseCode)
         ->firstorfail();
     $user->CourseAsStudent()->attach($course);
-    return redirect()->route('courses.list')
+    return redirect()->route('courses.myCourse.slist')
     ->with('status','Successfully registered');
     }
 
