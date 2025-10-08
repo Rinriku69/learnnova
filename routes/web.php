@@ -67,7 +67,8 @@ Route::middleware([
 
             Route::name('myCourse.') // My course
                 ->group(static function (): void {
-                    route::get('/myCourse', 'mycourseList')->name('list');
+                    route::get('/myCourseExpert', 'ExpertCourseList')->name('elist');
+                    route::get('/myCourse', 'StudentcourseList')->name('slist');
                 });
 
             Route::prefix('/{courseCode}')->group(static function (): void {
@@ -75,6 +76,7 @@ Route::middleware([
                 route::get('/updateForm', 'CourseUpdateForm')->name('updateForm');
                 route::post('/update', 'CourseUpdate')->name('update');
                 route::post('/delete', 'CourseDelete')->name('delete');
+                route::post('/register', 'CourseRegister')->name('register');
             });
         });
 });

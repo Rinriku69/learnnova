@@ -15,10 +15,7 @@ class CoursePolicy
         //
     }
 
-     function mycourse(): bool
-    {
-        return true;
-    }
+     
 
     function register(User $user): bool
     {
@@ -39,6 +36,16 @@ class CoursePolicy
 
     function courseUpdate(User $user): bool{
         return $this->courseDelete($user);
+    }
+
+    function ExpertCourseList(User $user): bool
+    {
+        return $this->courseDelete($user);
+    }
+
+    function StudentCourseList(User $user): bool
+    {
+        return $user->isStudent();
     }
 
 

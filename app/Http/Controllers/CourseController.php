@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
-
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,11 +53,11 @@ class CourseController extends Controller
 
     }
 
-    function myCourseList() : View {
+    function ExpertCourseList() : View {
     
         $course = Course::where('user_id',Auth::user()->id)
         ->get();
-        return view('myCourse.expert'
+        return view('myCourse.expert.list'
     ,['courses'=>$course]);
     }
 
@@ -88,7 +89,35 @@ class CourseController extends Controller
         ->FirstOrFail();
         $course->delete();
         Gate::authorize('courseDelete',$course);
-        return redirect()->route('courses.myCourse.list')
+        return redirect()->route('courses.myCourse.elist')
         ->with('status','Course '.$course->name.' was deleted');
+    }
+
+    function CourseRegister(string $courseCode):RedirectResponse{
+        $user = User::where('id',Auth::user()->id)
+        ->firstorfail();
+        $course = Course::whereDoesntHave(
+            'student',
+            function (Builder $innerquery) use ($user){
+                return $innerquery->where('id',$user->id);
+            }
+        )
+        ->where('code',$courseCode)
+        ->firstorfail();
+    $user->CourseAsStudent()->attach($course);
+    return redirect()->route('courses.list')
+    ->with('status','Successfully registered');
+    }
+
+    function StudentCourseList(): view{
+         $user = User::where('id',Auth::user()->id)
+        ->firstorfail();
+        $course = $user->CourseAsStudent()
+        ->with('expert')
+        ->get();
+        
+        return view('myCourse.student.list',[
+            'courses'=>$course
+        ]);
     }
 }

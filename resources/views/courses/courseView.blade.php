@@ -31,8 +31,11 @@
                         </pre>
                     </div>
                     @can('register', \App\Models\Course::class)
+                    <form action="{{route('courses.register',
+                    ['courseCode' =>  $course->code])}}" method="post">
+                    @csrf
                     <button type="submit">Register</button>
-
+                    </form>
                     @endcan
                 </div>
             </div>

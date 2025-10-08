@@ -17,7 +17,8 @@ class User extends Authenticatable
 
     function CourseAsStudent() : BelongsToMany{
         return $this
-        ->belongsToMany(Course::class)
+        ->belongsToMany(Course::class
+        ,'course_user', 'user_id', 'course_id')
         ->withTimestamps();
     }
 

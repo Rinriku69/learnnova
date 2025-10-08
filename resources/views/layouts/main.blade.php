@@ -15,14 +15,22 @@
             <ul>
                 <li><a href="{{ route('home.main') }}">Home</a></li>
                 <li><a href="{{ route('courses.list') }}">Courses</a></li>
-                @can('mycourse', \App\Models\Course::class)
-                    <li><a href="{{route('courses.myCourse.list')}}">My Courses</a></li>
+                @auth
+                    
+              
+                @can('ExpertCourseList', \App\Models\Course::class)
+                     <li><a href="{{route('courses.myCourse.elist')}}">My Courses & Manage</a></li>
+                
+                @endcan
+                @can('StudentCourseList', \App\Models\Course::class)
+                     <li><a href="{{route('courses.myCourse.slist')}}">My Courses</a></li>
+                
                 @endcan
                 
                 @can('list', \App\Models\User::class)
                     <li><a href="{{ route('users.list') }}">User</a></li>
                 @endcan
-                
+                  @endauth
 
             </ul>
         </nav>
