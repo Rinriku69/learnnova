@@ -85,10 +85,12 @@ class CourseController extends Controller
 
 
     function CourseDelete(string $courseCode) : RedirectResponse{
+        /* dd($courseCode); */
         $course = Course::where('code',$courseCode)
         ->FirstOrFail();
-        $course->delete();
         Gate::authorize('courseDelete',$course);
+        $course->delete();
+        
         return redirect()->route('courses.myCourse.elist')
         ->with('status','Course '.$course->name.' was deleted');
     }
@@ -97,7 +99,7 @@ class CourseController extends Controller
         $user = User::where('id',Auth::user()->id)
         ->firstorfail();
         $course = Course::whereDoesntHave(
-            'student',
+            'students',
             function (Builder $innerquery) use ($user){
                 return $innerquery->where('id',$user->id);
             }
@@ -124,7 +126,7 @@ class CourseController extends Controller
     function studentList(string $courseCode): view{
         $course = Course::where('code',$courseCode)
         ->firstorfail();
-        $student = $course->student;
+        $student = $course->students;
 
         return view('myCourse.expert.student',[
             'students' => $student

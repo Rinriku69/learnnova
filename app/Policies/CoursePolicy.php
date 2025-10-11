@@ -22,14 +22,24 @@ class CoursePolicy
         return $user->isStudent();
     }
 
-    function courseDelete(User $user, Course $course): bool
-    {
-        if (!$user->isAdministrator() && !$user->isExpert()) {
-            return false;
-        }
-
-         return !$course->student()->exists();
+    public function courseDelete(User $user, Course $course): bool
+{
+    
+    if ($user->isAdministrator()) {
+        /*  $studentQuery = $course->students();
+        dd($studentQuery->toSql(), $studentQuery->getBindings()); */
+        return !$course->students()->exists();
     }
+
+    if ($user->isExpert()) {
+      /*  $studentQuery = $course->students();
+        dd($studentQuery->toSql(), $studentQuery->getBindings()); */
+        return $user->id === $course->user_id && !$course->students()->exists();
+        
+    }
+
+    return false;
+}
 
     function courseManipulate(User $user): bool
     {
