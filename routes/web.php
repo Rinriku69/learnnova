@@ -77,6 +77,7 @@ Route::middleware([
                 route::post('/update', 'CourseUpdate')->name('update');
                 route::post('/delete', 'CourseDelete')->name('delete');
                 route::post('/register', 'CourseRegister')->name('register');
+                route::get('/studentList', 'studentList')->name('student');
             });
         });
 });

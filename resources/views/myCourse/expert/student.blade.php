@@ -1,6 +1,6 @@
-@extends('layouts.main',['title'=> 'User list'])
-
-
+@extends('layouts.main',[
+    'title' => 'Student List'
+])
 
 @section('content')
 <table class="app-cmp-data-list">
@@ -8,12 +8,12 @@
             <tr>
                 <th>Email</th>
                 <th>Name</th>
-                <th>Role</th>
+             
             </tr>
         </thead>
         <tbody>
 
-            @foreach ($users as $user)
+            @foreach ($students as $user)
                 <tr>
                     <td>
                         <a
@@ -22,7 +22,7 @@
                         </a>
                     </td>
                     <td>{{ $user->name }}</td>
-                    <td>{{ $user->role }}</td>
+                  
                 </tr>
             @endforeach
         </tbody>

@@ -120,4 +120,14 @@ class CourseController extends Controller
             'courses'=>$course
         ]);
     }
+
+    function studentList(string $courseCode): view{
+        $course = Course::where('code',$courseCode)
+        ->firstorfail();
+        $student = $course->student;
+
+        return view('myCourse.expert.student',[
+            'students' => $student
+        ]);
+    }
 }

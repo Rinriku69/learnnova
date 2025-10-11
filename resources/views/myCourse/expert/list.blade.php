@@ -23,6 +23,7 @@
                     <b>{{$course->name}}</b>
                     <a href="#">View Course</a>
                     <a href="#">Manage Course</a>
+                    <a href="{{route('courses.student',['courseCode'=>$course->code])}}">Students</a>
                    <button type="submit" form="delete-button">Remove this course</button> 
                 </div> 
                 @endforeach
