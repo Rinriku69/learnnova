@@ -5,7 +5,7 @@
 @section('header')
     <div class="app-cmp-inf-header">
         <div class="bar-vedeo-intro">
-            <iframe src="https://www.youtube.com/embed/DzjO4d9nh_k" title="JAVASCRIP" frameborder="0"
+            <iframe src="" title="JAVASCRIP" frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
             </iframe>
@@ -21,17 +21,17 @@
             <nav class="app-cmp-expcourses">
                 <dl class="app-cmp-coursdetail">
                     <nav>
-                        <dt><img src="img/FDEV.jpg"></dt>
+                        <dt><img src="img/logo_icon/FDEV.jpg"></dt>
                         <dd>FULL DEV</dd>
                     </nav>
 
                     <nav>
-                        <dt><img src="img/DS.jpg"></dt>
+                        <dt><img src="img/logo_icon/DS.jpg"></dt>
                         <dd>DATA SCI</dd>
                     </nav>
 
                     <nav>
-                        <dt><img src="img/data_security.jpg"></dt>
+                        <dt><img src="img/logo_icon/data_security.jpg"></dt>
                         <dd>DATA SECURITY</dd>
                     </nav>
                 </dl>

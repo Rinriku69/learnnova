@@ -64,12 +64,12 @@
     <footer class="app-cmp-footer">
         <h1>Learnnova</h1>
         <ul>
-            <li><img src="img/facebook.png" class="imgmain" /></li>
-            <li><img src="img/instagram.png" class="imgmain" /></li>
-            <li><img src="img/youtube.png" class="imgmain" /></li>
+            <li><img src="img/logo_icon/facebook.png" class="imgmain" /></li>
+            <li><img src="img/logo_icon/instagram.png" class="imgmain" /></li>
+            <li><img src="img/logo_icon/youtube.png" class="imgmain" /></li>
         </ul>
         <nav class="app-f-detai">
-            <img src="img/copyright.png" class="imgmains" />
+            <img src="img/logo_icon/copyright.png" class="imgmains" />
             <span>
                 2025 By Learnnova ,Built on
                 Max-win Studio.
