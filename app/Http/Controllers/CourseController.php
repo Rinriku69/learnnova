@@ -98,14 +98,9 @@ class CourseController extends Controller
     function CourseRegister(string $courseCode):RedirectResponse{
         $user = User::where('id',Auth::user()->id)
         ->firstorfail();
-        $course = Course::whereDoesntHave(
-            'students',
-            function (Builder $innerquery) use ($user){
-                return $innerquery->where('id',$user->id);
-            }
-        )
-        ->where('code',$courseCode)
+        $course = Course::where('code',$courseCode)
         ->firstorfail();
+        Gate::authorize('register',$course);
     $user->CourseAsStudent()->attach($course);
     return redirect()->route('courses.myCourse.slist')
     ->with('status','Successfully registered');
