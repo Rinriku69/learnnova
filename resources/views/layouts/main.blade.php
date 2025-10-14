@@ -11,7 +11,7 @@
 <body id="app-cmp-body">
     <header class="app-cmp-header">
         <div class="app-cmp-header-container">
-            <h1>Learnnova</h1>
+            <h2>Learnnova</h2>
             <nav class="app-cmp-link-panel">
                 <ul>
                     <li><a href="{{ route('home.main') }}">Home</a></li>
@@ -63,11 +63,6 @@
     </main>
     <footer class="app-cmp-footer">
         <h1>Learnnova</h1>
-        <ul>
-            <li><img src="img/logo_icon/facebook.png" class="imgmain" /></li>
-            <li><img src="img/logo_icon/instagram.png" class="imgmain" /></li>
-            <li><img src="img/logo_icon/youtube.png" class="imgmain" /></li>
-        </ul>
         <nav class="app-f-detai">
             <img src="img/logo_icon/copyright.png" class="imgmains" />
             <span>
@@ -75,6 +70,11 @@
                 Max-win Studio.
             </span>
         </nav>
+        <ul>
+            <li><img src="img/logo_icon/facebook.png" class="imgmain" /></li>
+            <li><img src="img/logo_icon/instagram.png" class="imgmain" /></li>
+            <li><img src="img/logo_icon/youtube.png" class="imgmain" /></li>
+        </ul>
     </footer>
 </body>
 
