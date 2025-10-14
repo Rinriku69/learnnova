@@ -47,7 +47,7 @@ class CourseController extends Controller
         $course->fill($data);
         $course->save();
         
-        return redirect()->route('courses.list')
+        return redirect()->route('courses.myCourse.elist')
         ->with('status','Course '.$course->name.' was created');
 
 
