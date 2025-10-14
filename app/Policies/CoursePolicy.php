@@ -17,9 +17,9 @@ class CoursePolicy
 
 
 
-    function register(User $user): bool
+    function register(User $user,Course $course): bool
     {
-        return $user->isStudent();
+        return $user->isStudent()&&!$course->students()->where('user_id', $user->id)->exists();
     }
 
     public function courseDelete(User $user, Course $course): bool

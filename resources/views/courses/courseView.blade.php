@@ -30,7 +30,7 @@
                             {{ $course->description }}
                         </pre>
                     </div>
-                    @can('register', \App\Models\Course::class)
+                    @can('register', $course)
                     <form action="{{route('courses.register',
                     ['courseCode' =>  $course->code])}}" method="post">
                     @csrf
