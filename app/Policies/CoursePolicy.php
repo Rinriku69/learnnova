@@ -27,7 +27,7 @@ class CoursePolicy
     
     if ($user->isAdministrator()) {
         /*  $studentQuery = $course->students();
-        dd($studentQuery->toSql(), $studentQuery->getBindings()); */
+        dd($studentQuery->toSql(), $studentQuery->getBindings()); */ //debug
         return !$course->students()->exists();
     }
 
