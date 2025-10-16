@@ -5,23 +5,46 @@
 @section('header')
     <div class="app-cmp-inf-header">
         <div class="bar-vedeo-intro">
-          
             <span>WELCOME TO LEARNNOVA</span>
         </div>
-        <button type="button" class="btn-more">See More...</button>
     </div>
 @endsection
 
 @section('content')
     <main>
         <div class="app-cmp-inf">
-            <nav class="app-cmp-expcourses">
-               
-            </nav>
-            <nav class="app-see-courses">
-                <a href="">
-                    All Course
-                </a>
+            <span><b>Learn essential career and life skills</b><br>
+                Learnnova helps you build in-demand skills fast and
+                advance your career in a changing job market.</span>
+            <nav class="group-courses">
+                <dl class="app-cmp-coursdetail">
+                    <nav class="gcousers">
+                        <dt><img src="img/logo_icon/FDEV.jpg"></dt>
+                        <dd>FULL DEV</dd>
+                    </nav>
+                    <nav class="gcousers">
+                        <dt><img src="img/logo_icon/DS.jpg"></dt>
+                        <dd>DATA SCI</dd>
+                    </nav>
+                    <nav class="gcousers">
+                        <dt><img src="img/logo_icon/data_security.jpg"></dt>
+                        <dd>DATA SECURITY</dd>
+                    </nav>
+                </dl>
+                <dl class="app-cmp-coursdetail">
+                    <nav class="gcousers">
+                        <dt><img src="img/logo_icon/FDEV.jpg"></dt>
+                        <dd>FULL DEV</dd>
+                    </nav>
+                    <nav class="gcousers">
+                        <dt><img src="img/logo_icon/DS.jpg"></dt>
+                        <dd>DATA SCI</dd>
+                    </nav>
+                    <nav class="gcousers">
+                        <dt><img src="img/logo_icon/data_security.jpg"></dt>
+                        <dd>DATA SECURITY</dd>
+                    </nav>
+                </dl>
             </nav>
         </div>
     </main>
