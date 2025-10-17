@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
-
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,17 +47,17 @@ class CourseController extends Controller
         $course->fill($data);
         $course->save();
         
-        return redirect()->route('courses.list')
+        return redirect()->route('courses.myCourse.elist')
         ->with('status','Course '.$course->name.' was created');
 
 
     }
 
-    function myCourseList() : View {
+    function ExpertCourseList() : View {
     
         $course = Course::where('user_id',Auth::user()->id)
         ->get();
-        return view('myCourse.expert'
+        return view('myCourse.expert.list'
     ,['courses'=>$course]);
     }
 
@@ -84,11 +85,46 @@ class CourseController extends Controller
 
 
     function CourseDelete(string $courseCode) : RedirectResponse{
+        /* dd($courseCode); */
         $course = Course::where('code',$courseCode)
         ->FirstOrFail();
-        $course->delete();
         Gate::authorize('courseDelete',$course);
-        return redirect()->route('courses.myCourse.list')
+        $course->delete();
+        
+        return redirect()->route('courses.myCourse.elist')
         ->with('status','Course '.$course->name.' was deleted');
+    }
+
+    function CourseRegister(string $courseCode):RedirectResponse{
+        $user = User::where('id',Auth::user()->id)
+        ->firstorfail();
+        $course = Course::where('code',$courseCode)
+        ->firstorfail();
+        Gate::authorize('register',$course);
+    $user->CourseAsStudent()->attach($course);
+    return redirect()->route('courses.myCourse.slist')
+    ->with('status','Successfully registered');
+    }
+
+    function StudentCourseList(): view{
+         $user = User::where('id',Auth::user()->id)
+        ->firstorfail();
+        $course = $user->CourseAsStudent()
+        ->with('expert')
+        ->get();
+        
+        return view('myCourse.student.list',[
+            'courses'=>$course
+        ]);
+    }
+
+    function studentList(string $courseCode): view{
+        $course = Course::where('code',$courseCode)
+        ->firstorfail();
+        $student = $course->students;
+
+        return view('myCourse.expert.student',[
+            'students' => $student
+        ]);
     }
 }

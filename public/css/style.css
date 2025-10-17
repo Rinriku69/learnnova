@@ -1,4 +1,4 @@
-/*
+/* 
     --primary-color: #4a90e2;
     --primary-hover: #357ABD;
     --danger-color: #d9534f;
@@ -10,20 +10,70 @@
     --white-color: #ffffff;
 */
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    background-color: #f8f9fa;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+@font-face {
+  font-family: 'MINI';
+  src:url('มินิ/MNMINIMON.ttf') format('truetype'),
+  ;
+  font-weight: normal;
+  font-style: normal;
+}
 
+#app-cmp-body {
+  font-family: MINI;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 
-header.nav {
+.app-cmp-header>.app-cmp-header-container {
+  height: 70px;
+  background-color: #ffffff;
+  padding: 0 2rem 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-cmp-link-panel>ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.app-cmp-user-panel>ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* .app-cmp-link-panel>ul>li>a {
+    text-decoration: none;
+    color: #4a90e2;
+    font-size: 1.25rem;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+    &&:hover {
+        text-decoration: none;
+        color: #357ABD;
+        background-color: rgba(67, 104, 250, 0.25);
+        padding: 10px 20px 10px 20px;
+        border-radius: 15px;
+    }
+} */
+
+/* --- Navigation --- */
+ header.nav {
     
         background-color: #ffffff;
         padding: 1rem 2.5rem;
@@ -60,27 +110,136 @@ nav a:hover {
     border-bottom-color: #357ABD;
 }
 
-main {
-    flex: 1;
+
+.app-cmp-user-panel>a {
+    text-decoration: none;
+    color: #4a90e2;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
+    &&:hover {
+        text-decoration: none;
+        color: #357ABD;
+        background-color: rgba(67, 104, 250, 0.25);
+        padding: 10px 20px 10px 20px;
+        border-radius: 15px;
+    }
+} 
+/*Header Home.main*/
+.app-cmp-inf-header{
+  width: 100%;
+  max-width: 1380px;
+  margin-top: -2.5em;
+  padding: 5em 0 0 0;
+  justify-self: center;
+}
+.bar-vedeo-intro{
+  text-align: center;
+  font-size: 10ch;
+}
+
+/*Main*/
+ main {
+    display: block;
     padding: 2.5rem;
-    max-width: 1200px;
     width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
+} 
+
+.app-cmp-inf{
+  width: 100%;
+  max-width: 1380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  padding: 2em;
+}
+.app-cmp-inf>span{
+  width: 280px;
+  font-size: 3ch;
+  padding-right: .5em;
 }
 
-footer {
-    background-color: #343a40;
-    padding: 1rem 2.5rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    border-top: 1px solid #dee2e6;
-    color: #4a90e2;
-    text-align: right;
+.group-courses{
+  margin: 100px auto;
+  width: 90%;
+  display: flex;
+  overflow-x: auto;
+}
+.group-courses::-webkit-scrollbar{
+  display: none;
+}
+.app-cmp-coursdetail{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  animation: spin 10s infinite linear;
+  padding-right: 1em;
+}
+.app-cmp-coursdetail>nav>dt>img{
+  width: auto;
+  height: 250px;
+  border-radius: 25px;
+  background-color: #4a90e2;
+}
+.gcousers{
+  flex: 0 0 5em;
+  height: 5em auto;
+  padding: 1em;
+  font-size: 1.5rem;
+  border-radius: .2em;
+  text-align: center;
+  align-items: center;
+}
+@keyframes spin{
+  from {translate: 0;}
+  to {translate: -100%;}
 }
 
-.app-cmp-inf-course {
-    border: 1px #333 solid;
+/*Footer*/
+.app-cmp-footer {
+  position: relative;
+  display: flex;
+  background-color: #0f243a;
+  padding: 1rem 2.5rem;
+  color: white;
 }
+.app-cmp-footer h1 {
+  justify-self: left;
+  text-align: left;
+  font-weight: 100;
+}
+.app-f-detai{
+  display: flex;
+  margin-top: 1em;
+  margin-left: .5em;
+}
+.app-f-detai img{
+  width: auto;
+  height: 15px;
+  padding-right: .2em;
+}
+.app-cmp-footer>ul {
+  display: flex;
+  margin-left: 75em;
+  list-style: none;
+}
+.app-cmp-footer>ul>li {
+  display: flex;
+  list-style: none;
+  padding-right: .5em;
+}
+.app-cmp-footer>ul>li>img {
+  width: auto;
+  height: 40px;
+}
+
+/*Login Page*/
 
 .login-page-body {
     align-items: center;
@@ -147,11 +306,11 @@ footer {
     outline: none;
     border-color: var(--border-focus);
     box-shadow: 0 0 0 3px rgba(67, 104, 250, 0.25);
-}
+} 
 
 /* --- Buttons --- */
 
-.btn,
+/* .btn,
 .login-button,
 .logout-button {
     display: inline-block;
@@ -204,4 +363,5 @@ a:hover {
 
 .app-cmp-inf-course {
     border: 1px #333 solid;
-}
+} 
+ */

@@ -15,9 +15,10 @@ class Course extends Model
         return $this->belongsTo(User::class,'user_id');
     }
 
-    function student(): BelongsToMany{
+    function students(): BelongsToMany{
         return $this
-        ->belongsToMany(User::class)
+        ->belongsToMany(User::class,
+        'course_user', 'course_id', 'user_id')
         ->withTimestamps();
     }
 

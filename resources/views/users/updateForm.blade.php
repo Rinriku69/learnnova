@@ -7,7 +7,7 @@
         @csrf
         <label >
             <b>Email</b>
-            <input type="email" name="email"  value="{{$user->email}}" readonly >
+            <input type="email" name="email"  value="{{$user->email}}" disabled >
         </label><br>
         <label >
             <b>Name</b>
@@ -26,7 +26,7 @@
                      ADMIN</option>
             </select></label><br>
             @else
-            <input type="text" name="role"  value="{{$user->role}}" readonly ><br>
+            <input type="text" name="role"  value="{{$user->role}}" disabled ><br>
             @endif
         <label >
             <b>Password</b>

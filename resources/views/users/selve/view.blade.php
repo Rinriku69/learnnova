@@ -1,5 +1,5 @@
 @extends('layouts.main', [
-    'title' => $user->name,
+    'title' => 'My Profile',
 ])
 
 @section('header')
