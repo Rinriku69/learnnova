@@ -25,8 +25,8 @@
 }
 
 #app-cmp-body {
-  font-family: MINI;
-  background-color: #f8f9fa;
+  font-family:  "MINI",Arial, Helvetica, sans-serif;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -209,34 +209,49 @@ nav a:hover {
   padding: 1rem 2.5rem;
   color: white;
 }
-.app-cmp-footer h1 {
-  justify-self: left;
-  text-align: left;
-  font-weight: 100;
+.app-f-container {
+  display: grid;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+  gap: 2rem;
 }
-.app-f-detai{
-  display: flex;
-  margin-top: 1em;
-  margin-left: .5em;
-}
-.app-f-detai img{
-  width: auto;
-  height: 15px;
-  padding-right: .2em;
-}
-.app-cmp-footer>ul {
-  display: flex;
-  margin-left: 75em;
+.app-f-navlinks {
   list-style: none;
-}
-.app-cmp-footer>ul>li {
   display: flex;
-  list-style: none;
-  padding-right: .5em;
+  gap: 10rem;
+  width: 1280px;
+  padding: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: rgb(101, 97, 134) 1px solid;
+  justify-content: center;
 }
-.app-cmp-footer>ul>li>img {
-  width: auto;
-  height: 40px;
+.app-f-navlinks 
+ul {
+  list-style: none;
+  display: grid;
+  padding-top: 10px;
+  gap: 1ch;
+  &>li>a {
+    text-decoration: none;
+    color: rgb(141, 141, 167);
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    &:hover {
+      color: #ffffff;
+    }
+  }
+}
+.app-f-detai p {
+  justify-self: center;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  font-size: 1rem;
+  color: rgb(141, 141, 167);
 }
 
 /*Login Page*/
@@ -306,62 +321,4 @@ nav a:hover {
     outline: none;
     border-color: var(--border-focus);
     box-shadow: 0 0 0 3px rgba(67, 104, 250, 0.25);
-} 
-
-/* --- Buttons --- */
-
-/* .btn,
-.login-button,
-.logout-button {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    border-radius: var(--border-radius-md);
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    border: none;
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    text-align: center;
-}
-
-.btn-primary,
-.login-button {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-}
-
-.btn-primary:hover,
-.login-button:hover {
-    background-color: var(--primary-hover);
-    text-decoration: none;
-}
-
-.btn-danger,
-.logout-button {
-    background-color: var(--danger-color);
-    color: var(--white-color);
-}
-
-.btn-danger:hover,
-.logout-button:hover {
-    background-color: var(--danger-hover);
-    text-decoration: none;
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: var(--primary-hover);
-}
-
-.app-cmp-inf-course {
-    border: 1px #333 solid;
-} 
- */
+}  
