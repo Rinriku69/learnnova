@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Lesson extends Model
 {
     function course() : BelongsTo{
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Course::class,'courses_id');
     }
 }

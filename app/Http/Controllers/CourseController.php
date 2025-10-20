@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
@@ -126,5 +127,17 @@ class CourseController extends Controller
         return view('myCourse.expert.student',[
             'students' => $student
         ]);
+    }
+
+    function CourseContentManage(string $courseCode): View{
+        $course  = Course::with('lessons')
+        ->where('code',$courseCode)
+        ->firstorfail();
+        $lessons = $course->lessons;
+
+        
+
+        return view('myCourse.expert.manageCourse'
+    ,['lessons'=>$lessons]);
     }
 }

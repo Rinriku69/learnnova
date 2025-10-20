@@ -22,7 +22,7 @@
                     <div class="app-cmp-inf-course">
                     <b>{{$course->name}}</b>
                     <a href="#">View Course</a>
-                    <a href="#">Manage Course</a>
+                    <a href="{{route('courses.manage',['courseCode'=>$course->code])}}">Manage Course</a>
                     <a href="{{route('courses.student',['courseCode'=>$course->code])}}">Students</a>
                      @can('courseDelete',$course) 
                         <button type="submit" form="delete-button{{$course->code}}">Remove this course</button> 
