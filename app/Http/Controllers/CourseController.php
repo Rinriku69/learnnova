@@ -138,6 +138,7 @@ class CourseController extends Controller
         
 
         return view('myCourse.expert.manageCourse'
-    ,['lessons'=>$lessons]);
+    ,['lessons'=>$lessons
+,'course'=>$course]);
     }
 }

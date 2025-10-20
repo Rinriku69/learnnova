@@ -2,8 +2,9 @@
 ['title'=>'Manage Course' ])
 
 @section('content')
+<h1>Course : {{$course->name}}</h1><br>
 @foreach ($lessons as $lesson)
-<h1>Course : {{$lesson->course->name}}</h1><br>
+
 <p>{{$lesson->title}}</p>
 <pre>  {{$lesson->content}}</pre>
 
