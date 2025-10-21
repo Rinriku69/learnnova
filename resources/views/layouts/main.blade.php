@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Noto+Sans+Thai:wght@400;600&display=swap" type="text/css" rel="stylesheet">
     <title>{{ $title ?? 'Learnnova' }}</title>
 </head>
 
@@ -33,7 +34,7 @@
                     <li><a href="{{ route('users.list') }}">User</a></li>
                 @endcan
                   @endauth
-
+                <li><a href="{{ route('home.about.main') }}">About</a></li>
             </ul>
         </nav>
         <nav class="app-cmp-user-panel">

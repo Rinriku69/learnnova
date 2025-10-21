@@ -34,6 +34,7 @@ Route::middleware([
         ->name('home.')
         ->group(static function (): void {
             route::get('', 'home')->name('main');
+            route::get('/about', 'about')->name('about.main');
         });
 
     Route::controller(UserController::class) //User&&Authertication

@@ -16,16 +16,13 @@
   box-sizing: border-box;
 }
 
-@font-face {
-  font-family: 'MINI';
-  src:url('มินิ/MNMINIMON.ttf') format('truetype'),
-  ;
-  font-weight: normal;
-  font-style: normal;
-}
-
 #app-cmp-body {
-  font-family:  "MINI",Arial, Helvetica, sans-serif;
+  font-family: "Poppins", "Noto Sans Thai", sans-serif;
+  line-height: 1.6;
+  /* ให้ฟอนต์ดูคมขึ้น */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
