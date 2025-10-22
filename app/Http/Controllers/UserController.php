@@ -125,8 +125,8 @@ class UserController extends Controller
 
     function selvesUpdateForm(): View
     {
-        $user = auth::user()->email;
-        $user = $this->find($user);
+        $user = auth::user();
+      
 
 
         return view('users.selve.update', [
