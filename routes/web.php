@@ -5,7 +5,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ManageController;
 use App\Http\Controllers\MyCoursesController;
-use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -80,20 +79,6 @@ Route::middleware([
                 route::post('/register', 'CourseRegister')->name('register');
                 route::get('/studentList', 'studentList')->name('student');
                 route::get('/ContentManage', 'CourseContentManage')->name('manage');
-                route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-                Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.createForm');
-            });
-        });
-
-    Route::controller(ReviewController::class)
-        ->prefix('/reviews')
-        ->name('reviews.')
-        ->group(static function (): void {
-            Route::prefix('/{review}')->group(static function (): void {
-                route::get('/edit', 'edit')->name('edit');
-                route::put('/update', 'update')->name('update');
-                route::patch('/update', 'update');
-                route::post('/delete', 'destroy')->name('destroy');
             });
         });
 });

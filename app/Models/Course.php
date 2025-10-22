@@ -27,9 +27,6 @@ class Course extends Model
         return $this->hasMany(Lesson::class,'courses_id');
     }
 
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
+    
     
 }
