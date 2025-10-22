@@ -133,7 +133,7 @@ class UserController extends SearchableController
         $data = $request->getParsedBody();
         $user = $this->find($user);
         Gate::authorize('update', $user);
-
+        $password = $user->password;
 
         $user->fill($data);
         if ($user->email !== Auth::user()->email) {
@@ -141,6 +141,8 @@ class UserController extends SearchableController
         }
         if ($data['password'] !== null) {
             $user->password = $data['password'];
+        }else {
+            $user->password = $password;
         }
 
         $user->save();
@@ -171,10 +173,15 @@ class UserController extends SearchableController
         $data = $request->getParsedBody();
         $user = $this->find($user);
 
+        $password = $user->password;
         $user->fill($data);
+        
 
+        
         if ($data['password'] !== null) {
             $user->password = $data['password'];
+        }else {
+            $user->password = $password;
         }
 
         $user->save();
