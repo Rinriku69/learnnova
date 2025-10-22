@@ -26,6 +26,25 @@ class UserController extends SearchableController
         return User::orderBy('email');
     }
 
+    #[\Override]
+    function filter(
+        Builder|Relation $query,
+        array $criteria,
+    ): Builder|Relation {
+
+        if (!empty($criteria['term'])) {
+            $query->where(function ($q) use ($criteria) {
+                $q->where('email', 'LIKE', '%' . $criteria['term'] . '%')
+                    ->orWhere('name', 'LIKE', '%' . $criteria['term'] . '%');
+            });
+        }
+        if (!empty($criteria['role'])) {
+            $query->where('role', $criteria['role']);
+        }
+        return $query;
+    }
+
+    #[\Override]
     function find(string $code): Model
     {
         return User::where('id', $code)
@@ -35,9 +54,8 @@ class UserController extends SearchableController
 
     function list(
         ServerRequestInterface $request
-    ): View
-    {
-         Gate::authorize('list', User::class);
+    ): View {
+        Gate::authorize('list', User::class);
         $criteria = $this->prepareCriteria($request->getQueryParams());
         $query = $this->search($criteria);
         return view('users.list', [
@@ -115,7 +133,7 @@ class UserController extends SearchableController
         $data = $request->getParsedBody();
         $user = $this->find($user);
         Gate::authorize('update', $user);
-        $password = $user->password;
+
 
         $user->fill($data);
         if ($user->email !== Auth::user()->email) {
@@ -123,8 +141,6 @@ class UserController extends SearchableController
         }
         if ($data['password'] !== null) {
             $user->password = $data['password'];
-        } else {
-            $user->password = $password;
         }
 
         $user->save();
@@ -138,7 +154,7 @@ class UserController extends SearchableController
     function selvesUpdateForm(): View
     {
         $user = auth::user();
-      
+
 
 
         return view('users.selve.update', [
@@ -155,14 +171,10 @@ class UserController extends SearchableController
         $data = $request->getParsedBody();
         $user = $this->find($user);
 
-        $password = $user->password;
-
         $user->fill($data);
 
         if ($data['password'] !== null) {
             $user->password = $data['password'];
-        } else {
-            $user->password = $password;
         }
 
         $user->save();

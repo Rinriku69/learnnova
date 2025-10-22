@@ -12,15 +12,9 @@ use Illuminate\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class LessonController extends SearchableController
+class LessonController extends Controller
 {
-    const int MAX_ITEMS = 5;
 
-    #[\Override]
-    function getQuery(): Builder | Relation
-    {
-        return Lesson::orderBy('code');
-    }
 
     function view(string $lessonID): View
     {
