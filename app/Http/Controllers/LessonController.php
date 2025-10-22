@@ -24,7 +24,7 @@ class LessonController extends Controller
 
         return view(
             'courses.content.lesson',
-            ['lesson' => $lesson]
+            ['lesson' => $lesson,]
         );
     }
 
