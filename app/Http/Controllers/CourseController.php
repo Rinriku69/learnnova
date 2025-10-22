@@ -15,7 +15,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class CourseController extends Controller
 {
-    function CourseList() : View {
+    function CourseList(): View
+    {
         $course = Course::get();
 
         return View('courses.courseList', [
@@ -23,122 +24,158 @@ class CourseController extends Controller
         ]);
     }
 
-    function CourseView(string $courseCode) : View {
-        $course = Course::where('code',$courseCode)
-        ->with('expert')
-        ->firstOrFail();
+    function CourseView(string $courseCode): View
+    {
+        $course = Course::where('code', $courseCode)
+            ->with('expert')
+            ->firstOrFail();
 
         return View('courses.courseView', [
             'course' => $course,
         ]);
     }
 
-    function CourseCreateForm() : View{
-        Gate::authorize('courseCreate',Course::class);
+    function CourseCreateForm(): View
+    {
+        Gate::authorize('courseCreate', Course::class);
         return view('courses.createForm');
-        
-        
-
     }
 
-    function CourseCreate(ServerRequestInterface $request) : RedirectResponse{
+    function CourseCreate(ServerRequestInterface $request): RedirectResponse
+    {
         $data = $request->getParsedBody();
-        Gate::authorize('courseCreate',Course::class);
+        Gate::authorize('courseCreate', Course::class);
         $course = new Course();
         $course->fill($data);
+        $course->user_id = Auth::user()->id;
         $course->save();
-        
+
         return redirect()->route('courses.myCourse.elist')
-        ->with('status','Course '.$course->name.' was created');
-
-
+            ->with('status', 'Course ' . $course->name . ' was created');
     }
 
-    function ExpertCourseList() : View {
-    
-        $course = Course::where('user_id',Auth::user()->id)
-        ->get();
-        return view('myCourse.expert.list'
-    ,['courses'=>$course]);
+    function ExpertCourseList(): View
+    {
+
+        $course = Course::where('user_id', Auth::user()->id)
+            ->get();
+        return view(
+            'myCourse.expert.list',
+            ['courses' => $course]
+        );
     }
 
-    function CourseUpdateForm(string $courseCode): view{
-        $course = Course::where('code',$courseCode)
-        ->firstorfail();
-        Gate::authorize('courseCreate',$course);
-        return view('courses.updateForm'
-    ,['course'=>$course]);
+    function CourseUpdateForm(string $courseCode): view
+    {
+        $course = Course::where('code', $courseCode)
+            ->firstorfail();
+        Gate::authorize('courseCreate', $course);
+        return view(
+            'courses.updateForm',
+            ['course' => $course]
+        );
     }
 
-    function CourseUpdate(ServerRequestInterface $request, string $couseCode) : RedirectResponse{
+    function CourseUpdate(ServerRequestInterface $request, string $couseCode): RedirectResponse
+    {
         $data = $request->getParsedBody();
-        $course = Course::where('code',$couseCode)
-        ->firstorfail();
-        Gate::authorize('courseCreate',$course);
+        $course = Course::where('code', $couseCode)
+            ->firstorfail();
+        Gate::authorize('courseUpdate', $course);
         $course->fill($data);
         $course->save();
 
-        return redirect()->route('courses.view',
-        ['courseCode'=> $course->code])
-        ->with('status','Course '.$course->name.' was updated');
-        
+        return redirect()->route(
+            'courses.view',
+            ['courseCode' => $course->code]
+        )
+            ->with('status', 'Course ' . $course->name . ' was updated');
     }
 
 
-    function CourseDelete(string $courseCode) : RedirectResponse{
+    function CourseDelete(string $courseCode): RedirectResponse
+    {
         /* dd($courseCode); */
-        $course = Course::where('code',$courseCode)
-        ->FirstOrFail();
-        Gate::authorize('courseDelete',$course);
+        $course = Course::where('code', $courseCode)
+            ->FirstOrFail();
+        Gate::authorize('courseDelete', $course);
         $course->delete();
-        
+
         return redirect()->route('courses.myCourse.elist')
-        ->with('status','Course '.$course->name.' was deleted');
+            ->with('status', 'Course ' . $course->name . ' was deleted');
     }
 
-    function CourseRegister(string $courseCode):RedirectResponse{
-        $user = User::where('id',Auth::user()->id)
-        ->firstorfail();
-        $course = Course::where('code',$courseCode)
-        ->firstorfail();
-        Gate::authorize('register',$course);
-    $user->CourseAsStudent()->attach($course);
-    return redirect()->route('courses.myCourse.slist')
-    ->with('status','Successfully registered');
+    function CourseRegister(string $courseCode): RedirectResponse
+    {
+        $user = User::where('id', Auth::user()->id)
+            ->firstorfail();
+        $course = Course::where('code', $courseCode)
+            ->firstorfail();
+        Gate::authorize('register', $course);
+        $user->CourseAsStudent()->attach($course);
+        return redirect()->route('courses.myCourse.slist')
+            ->with('status', 'Successfully registered');
     }
 
-    function StudentCourseList(): view{
-         $user = User::where('id',Auth::user()->id)
-        ->firstorfail();
+    function StudentCourseList(): view
+    {
+        $user = User::where('id', Auth::user()->id)
+            ->firstorfail();
         $course = $user->CourseAsStudent()
-        ->with('expert')
-        ->get();
-        
-        return view('myCourse.student.list',[
-            'courses'=>$course
+            ->with('expert')
+            ->get();
+
+        return view('myCourse.student.list', [
+            'courses' => $course
         ]);
     }
 
-    function studentList(string $courseCode): view{
-        $course = Course::where('code',$courseCode)
-        ->firstorfail();
+    function studentList(string $courseCode): view
+    {
+        $course = Course::where('code', $courseCode)
+            ->firstorfail();
+        Gate::authorize('courseUpdate', $course);
         $student = $course->students;
 
-        return view('myCourse.expert.student',[
+        return view('myCourse.expert.student', [
             'students' => $student
         ]);
     }
 
-    function CourseContentManage(string $courseCode): View{
+    function CourseContentManage(string $courseCode): View
+    {
         $course  = Course::with('lessons')
-        ->where('code',$courseCode)
-        ->firstorfail();
+            ->where('code', $courseCode)
+            ->firstorfail();
+        Gate::authorize('courseContentView', $course);
         $lessons = $course->lessons;
 
-        
 
-        return view('myCourse.expert.manageCourse'
-    ,['lessons'=>$lessons
-,'course'=>$course]);
+
+        return view(
+            'myCourse.expert.manageCourse',
+            [
+                'lessons' => $lessons,
+                'course' => $course
+            ]
+        );
+    }
+
+    function CourseContentView(string $courseCode): View
+    {
+        $course  = Course::with('lessons')
+            ->where('code', $courseCode)
+            ->firstorfail();
+        $lessons = $course->lessons;
+
+
+
+        return view(
+            'courses.content.courseContent',
+            [
+                'lessons' => $lessons,
+                'course' => $course
+            ]
+        );
     }
 }

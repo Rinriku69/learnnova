@@ -17,7 +17,7 @@
                     <b>{{$course->code}}</b>
                     <b>{{$course->name}}</b>
                     <b>By {{$course->expert->name}}</b>
-                    <a href="#">Study</a>
+                    <a href="{{route('courses.content',['courseCode'=>$course->code])}}">Study</a>
 
                 </div> 
                 @endforeach

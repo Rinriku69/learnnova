@@ -101,8 +101,8 @@ class UserController extends Controller
        $password = $user->password;
 
         $user->fill($data);
-        $user->email = $data['email'];
-        $user->role = $data['role'];
+        if($user->email !== Auth::user()->email){
+        $user->role = $data['role'];}
          if($data['password'] !== null){
             $user->password = $data['password'];
         }else{
@@ -140,8 +140,7 @@ class UserController extends Controller
        $password = $user->password;
 
         $user->fill($data);
-        $user->email = $data['email'];
-        $user->role = $data['role'];
+      
          if($data['password'] !== null){
             $user->password = $data['password'];
         }else{

@@ -16,16 +16,9 @@
         
         <label>
             <b>Role</b>
-            @if ($user->email !== \Auth::user()->email)
-            <select name="role" id="">
-                    <option value="USER" @selected($user->role === 'USER')>
-                     USER</option>
-                    <option value="ADMIN" @selected($user->role === 'ADMIN')>
-                     ADMIN</option>
-            </select></label><br>
-            @else
-            <input type="text" name="role"  value="{{$user->role}}" readonly ><br>
-            @endif
+            
+            <input type="text" name="role"  value="{{$user->role}}" disabled ><br>
+           
         <label >
             <b>Password</b>
             <input type="text" name="password"  value="" placeholder="Leave blank to not update">

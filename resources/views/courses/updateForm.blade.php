@@ -16,7 +16,7 @@
         
         <label>
             <b>Description</b>
-            <textarea name="description" id="" cols="30" rows="10">{{$course->description}}</textarea>
+            <textarea name="description" id="" cols="60" rows="20">{{$course->description}}</textarea>
         <label ><br>
             <b>Image Name</b>
             <input type="text" name="img"  value=""{{$course->img}} >

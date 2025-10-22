@@ -3,11 +3,16 @@
 
 @section('content')
 <h1>Course : {{$course->name}}</h1><br>
+<a href="{{route('lesson.CreateForm',['courseCode'=>$course->code])}}">+Add new lesson</a>
 @foreach ($lessons as $lesson)
+<form action="{{route('lesson.delete'
+,['lessonID'=>$lesson->id])}}" method="POST">
+@csrf
+<a href="{{route('lesson.view',['lessonID'=>$lesson->id])}}">{{$lesson->title}}</a>
 
-<p>{{$lesson->title}}</p>
-<pre>  {{$lesson->content}}</pre>
 
+<button type="submit">Remove this lesson</button>
+</form>
     
 @endforeach
     

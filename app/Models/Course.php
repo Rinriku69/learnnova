@@ -22,11 +22,19 @@ class Course extends Model
         'course_user', 'course_id', 'user_id')
         ->withTimestamps();
     }
+ 
 
     function lessons(): HasMany{
         return $this->hasMany(Lesson::class,'courses_id');
     }
 
-    
+    public function reviews() : HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function averageRating() {
+        return $this->reviews()->avg('rating');
+    }
     
 }

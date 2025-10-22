@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Lesson extends Model
 {
+    protected $fillable = ['title', 'content', 'video_url'];
     function course() : BelongsTo{
         return $this->belongsTo(Course::class,'courses_id');
     }

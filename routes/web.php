@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ManageController;
 use App\Http\Controllers\MyCoursesController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -79,6 +81,38 @@ Route::middleware([
                 route::post('/register', 'CourseRegister')->name('register');
                 route::get('/studentList', 'studentList')->name('student');
                 route::get('/ContentManage', 'CourseContentManage')->name('manage');
+                route::get('/Content', 'CourseContentView')->name('content');
+                route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+                Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.createForm');
             });
         });
+
+    Route::controller(ReviewController::class)
+        ->prefix('/reviews')
+        ->name('reviews.')
+        ->group(static function (): void {
+            Route::prefix('/{review}')->group(static function (): void {
+                route::get('/edit', 'edit')->name('edit');
+                route::put('/update', 'update')->name('update');
+                route::patch('/update', 'update');
+                route::post('/delete', 'destroy')->name('destroy');
+            });
+        });
+
+    Route::controller(LessonController::class)
+    ->prefix('/lesson')
+    ->name('lesson.')
+    ->group(static function(): void{
+     
+        Route::prefix('/create/{courseCode}')->group(static function (): void {
+         route::get('/CreateForm', 'CreateForm')->name('CreateForm');
+         route::post('/Create', 'Create')->name('Create');
+         
+        });
+        Route::prefix('/view/{lessonID}')->group(static function (): void {
+        route::get('/content','view')->name('view');
+        route::post('/Delete', 'Delete')->name('delete');
+         
+        });
+    });
 });

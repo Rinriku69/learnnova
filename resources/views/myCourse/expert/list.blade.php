@@ -21,7 +21,7 @@
                 @csrf</form>
                     <div class="app-cmp-inf-course">
                     <b>{{$course->name}}</b>
-                    <a href="#">View Course</a>
+                    <a href="{{route('courses.content',['courseCode'=>$course->code])}}">View Course</a>
                     <a href="{{route('courses.manage',['courseCode'=>$course->code])}}">Manage Course</a>
                     <a href="{{route('courses.student',['courseCode'=>$course->code])}}">Students</a>
                      @can('courseDelete',$course) 

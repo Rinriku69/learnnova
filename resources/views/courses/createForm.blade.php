@@ -19,7 +19,7 @@
             <b>Image File name</b>
             <input type="text" name="img" required>
         </label><br>
-        <input type="hidden" name="user_id" value="{{\Auth::user()->id}}">
+        
         <button type="submit">Create</button>
         <a href="{{route('courses.myCourse.elist')}}">
             <button type="button">Cancel</button>

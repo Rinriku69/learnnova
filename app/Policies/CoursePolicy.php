@@ -17,29 +17,27 @@ class CoursePolicy
 
 
 
-    function register(User $user,Course $course): bool
+    function register(User $user, Course $course): bool
     {
-        return $user->isStudent()&&!$course->students()->where('user_id', $user->id)->exists();
+        return $user->isStudent() && !$course->students()->where('user_id', $user->id)->exists();
     }
 
     public function courseDelete(User $user, Course $course): bool
-{
-    
-    if ($user->isAdministrator()) {
-        /*  $studentQuery = $course->students();
+    {
+
+        if ($user->isAdministrator()) {
+            /*  $studentQuery = $course->students();
         dd($studentQuery->toSql(), $studentQuery->getBindings()); */ //debug
-        return !$course->students()->exists();
-    }
+            return !$course->students()->exists();
+        }
 
-    if ($user->isExpert()) {
-      /*  $studentQuery = $course->students();
-        dd($studentQuery->toSql(), $studentQuery->getBindings()); */
-        return $user->id === $course->user_id && !$course->students()->exists();
-        
-    }
+        if ($user->isExpert()) {
 
-    return false;
-}
+            return $user->id === $course->user_id && !$course->students()->exists();
+        }
+
+        return false;
+    }
 
     function courseManipulate(User $user): bool
     {
@@ -56,9 +54,18 @@ class CoursePolicy
         return $this->courseManipulate($user);
     }
 
-    function courseUpdate(User $user): bool
+    function courseUpdate(User $user, Course $course): bool
     {
-        return $this->courseManipulate($user);
+        if ($user->isAdministrator()) {
+            return true;
+        }
+
+        if ($user->isExpert()) {
+
+            return $user->id === $course->user_id;
+        }
+
+        return false;
     }
 
     function ExpertCourseList(User $user): bool
@@ -69,5 +76,36 @@ class CoursePolicy
     function StudentCourseList(User $user): bool
     {
         return $user->isStudent();
+    }
+
+    function courseContentView(User $user, Course $course): bool
+    {
+        if ($user->isAdministrator()) {
+
+            return true;
+        }
+
+        if ($user->isExpert()) {
+
+            return $user->id === $course->user_id;
+        }
+        if ($user->isStudent()) {
+
+            return $course->students()->where('user_id', $user->id)->exists();
+        }
+        return false;
+    }
+
+    function lessonCreate(User $user, Course $course): bool
+    {
+        return $this->courseUpdate($user,$course);
+    }
+    function courseReview(User $user, Course $course): bool
+    {
+        if ($user->isStudent()) {
+
+            return $course->students()->where('user_id', $user->id)->exists();
+        }
+        return false;
     }
 }
