@@ -320,65 +320,6 @@ ul {
     box-shadow: 0 0 0 3px rgba(67, 104, 250, 0.25);
 } 
 
-/* --- Buttons --- */
-
-/* .btn,
-.login-button,
-.logout-button {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    border-radius: var(--border-radius-md);
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    border: none;
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    text-align: center;
-}
-
-.btn-primary,
-.login-button {
-    background-color: var(--primary-color);
-    color: var(--white-color);
-}
-
-.btn-primary:hover,
-.login-button:hover {
-    background-color: var(--primary-hover);
-    text-decoration: none;
-}
-
-.btn-danger,
-.logout-button {
-    background-color: var(--danger-color);
-    color: var(--white-color);
-}
-
-.btn-danger:hover,
-.logout-button:hover {
-    background-color: var(--danger-hover);
-    text-decoration: none;
-}
-
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: var(--primary-hover);
-}
-
-.app-cmp-inf-course {
-    border: 1px #333 solid;
-} 
- */
-
-
 
  .quiz-container {
     max-width: 700px;
