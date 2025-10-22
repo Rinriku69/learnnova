@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 
 abstract class SearchableController extends Controller
 {
-    abstract protected function getQuery(): Builder;
+    abstract protected function getQuery(): Builder | Relation;
 
     function prepareCriteria(array $criteria): array
     {

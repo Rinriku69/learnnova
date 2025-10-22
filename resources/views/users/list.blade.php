@@ -35,7 +35,7 @@
                 <tr>
                     <td>
                         <a
-                            href="{{route('users.view',[ 'user'=>$user->email, ])}}">
+                            href="{{route('users.view',[ 'userID'=>$user->id, ])}}">
                             {{ $user->email }}
                         </a>
                     </td>

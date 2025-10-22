@@ -8,7 +8,7 @@ use Illuminate\View\View;
 use App\Models\User;
 use GuzzleHttp\Psr7\ServerRequest;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
@@ -21,7 +21,7 @@ class UserController extends SearchableController
     const int MAX_ITEMS = 5;
 
     #[\Override]
-    function getQuery(): Builder
+    function getQuery(): Builder | Relation
     {
         return User::orderBy('email');
     }
@@ -33,12 +33,16 @@ class UserController extends SearchableController
             ->firstOrFail();
     }
 
-    function list(): View
+    function list(
+        ServerRequestInterface $request
+    ): View
     {
-        $user = User::get();
-        Gate::authorize('list', User::class);
+         Gate::authorize('list', User::class);
+        $criteria = $this->prepareCriteria($request->getQueryParams());
+        $query = $this->search($criteria);
         return view('users.list', [
-            'users' => $user
+            'users' => $query->paginate(self::MAX_ITEMS),
+            'criteria' => $criteria,
         ]);
     }
     function view(string $userID): View

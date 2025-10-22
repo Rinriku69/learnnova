@@ -4,7 +4,7 @@
 
 @section('header')
     <nav>
-        <form action="{{ route('users.delete', ['user' => $user->email]) }}" method="post" id="app-form-delete">
+        <form action="{{ route('users.delete', ['userID' => $user->id]) }}" method="post" id="app-form-delete">
             @csrf
         </form>
         <ul>
@@ -14,7 +14,7 @@
             </li>
 
             <li>
-                <a href="{{ route('users.updateForm', ['user' => $user->email]) }}">Update</a>
+                <a href="{{ route('users.updateForm', ['userID' => $user->id]) }}">Update</a>
             </li>
             @can('delete', $user)
                 @if ($user->email !== \Auth::user()->email)

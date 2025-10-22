@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Lesson;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
@@ -16,7 +17,7 @@ class LessonController extends SearchableController
     const int MAX_ITEMS = 5;
 
     #[\Override]
-    function getQuery(): Builder
+    function getQuery(): Builder | Relation
     {
         return Lesson::orderBy('code');
     }
