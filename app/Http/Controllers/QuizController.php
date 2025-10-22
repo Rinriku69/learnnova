@@ -2,16 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Services\JapaneseQuizService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 
 class QuizController extends Controller
 {
+    function start(): RedirectResponse{
+        session()->forget('correct_answer');
+        session()->forget('quiz_answers');
+
+        return redirect()->route('quiz.choice');
+    }
+    
     function quizForm(JapaneseQuizService $quizGenerate): View
     {
+        $course = Course::where('code','J101')->firstorfail();
+        Gate::authorize('courseContentView',$course);
         $level = 46;
         $choices = $quizGenerate->generateMultipleChoiceQuestion($level);
         $question = $choices['correctAnswer']->character;

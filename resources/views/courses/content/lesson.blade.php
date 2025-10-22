@@ -4,6 +4,6 @@
 @section('content')
 <pre>{{$lesson->content}}</pre>
     @if ($lesson->id === 8)
-        <a href="{{route('quiz.choice')}}">Quiz</a>
+        <a href="{{route('quiz.start')}}">Quiz</a>
     @endif
 @endsection

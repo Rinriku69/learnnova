@@ -121,6 +121,7 @@ Route::middleware([
     ->prefix('/quiz')
     ->name('quiz.')
     ->group(static function():void{
+        route::get('/start','start')->name('start');
         route::get('/multipleChoice','quizForm')->name('choice');
         route::post('/process','process')->name('process');
         route::get('/result','result')->name('result');
