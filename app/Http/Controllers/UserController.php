@@ -8,15 +8,23 @@ use Illuminate\View\View;
 use App\Models\User;
 use GuzzleHttp\Psr7\ServerRequest;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Psr\Http\Message\ServerRequestInterface;
 
-class UserController extends Controller
+class UserController extends SearchableController
 {
+    const int MAX_ITEMS = 5;
+
+    #[\Override]
+    function getQuery(): Builder
+    {
+        return User::orderBy('email');
+    }
 
     function find(string $code): Model
     {

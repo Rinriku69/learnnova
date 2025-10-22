@@ -23,7 +23,6 @@ class Course extends Model
         ->withTimestamps();
     }
  
-
     function lessons(): HasMany{
         return $this->hasMany(Lesson::class,'courses_id');
     }

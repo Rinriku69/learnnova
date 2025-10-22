@@ -4,14 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Lesson;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class LessonController extends Controller
+class LessonController extends SearchableController
 {
+    const int MAX_ITEMS = 5;
+
+    #[\Override]
+    function getQuery(): Builder
+    {
+        return Lesson::orderBy('code');
+    }
+
     function view(string $lessonID): View
     {
 
