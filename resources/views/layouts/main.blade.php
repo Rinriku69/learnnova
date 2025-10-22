@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Noto+Sans+Thai:wght@400;600&display=swap" type="text/css" rel="stylesheet">
     <title>{{ $title ?? 'Learnnova' }}</title>
 </head>
 
@@ -33,7 +34,7 @@
                     <li><a href="{{ route('users.list') }}">User</a></li>
                 @endcan
                   @endauth
-
+                <li><a href="{{ route('home.about.main') }}">About</a></li>
             </ul>
         </nav>
         <nav class="app-cmp-user-panel">
@@ -75,19 +76,43 @@
         @yield('content')
     </main>
     <footer class="app-cmp-footer">
-        <h1>Learnnova</h1>
-        <nav class="app-f-detai">
-            <img src="img/logo_icon/copyright.png" class="imgmains" />
-            <span>
-                2025 By Learnnova ,Built on
-                Max-win Studio.
-            </span>
-        </nav>
-        <ul>
-            <li><img src="img/logo_icon/facebook.png" class="imgmain" /></li>
-            <li><img src="img/logo_icon/instagram.png" class="imgmain" /></li>
-            <li><img src="img/logo_icon/youtube.png" class="imgmain" /></li>
-        </ul>
+        <div class="app-f-container">
+            <nav class="app-f-navlinks">
+                <nav class="app-f-nlink">
+                    <h3>Learnnova</h3>
+                    <p>
+                        Transforming lives through accessible, high-quality education.
+                    </p>
+                </nav>
+                <nav class="app-f-nlink">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#">Browse Courses</a></li>
+                        <li><a href="#">Become Instructor</a></li>
+                        <li><a href="#">Enterprise</a></li>
+                    </ul>
+                </nav>
+                <nav class="app-f-nlink">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </nav>
+                <nav class="app-f-nlink">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                    </ul>
+                </nav>
+            </nav>
+            <nav class="app-f-detai">
+                <p>&copy; 2025 Learnnova. All rights reserved.</p>
+            </nav>
+        </div>
     </footer>
 </body>
 
