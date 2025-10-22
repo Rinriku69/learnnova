@@ -4,7 +4,7 @@
 
 @section('header')
     <nav>
-        <form action="{{ route('users.delete', ['userID' => $user->id]) }}" method="post" id="app-form-delete">
+        <form action="{{ route('users.delete', ['user' => $user->email]) }}" method="post" id="app-form-delete">
             @csrf
         </form>
         <ul>
@@ -14,7 +14,7 @@
             </li>
 
             <li>
-                <a href="{{ route('users.updateForm', ['userID' => $user->id]) }}">Update</a>
+                <a href="{{ route('users.updateForm', ['user' => $user->email]) }}">Update</a>
             </li>
             @can('delete', $user)
                 @if ($user->email !== \Auth::user()->email)
@@ -23,7 +23,6 @@
                     </li>
                 @endif
             @endcan
-
         </ul>
     </nav>
 @endsection
@@ -32,12 +31,14 @@
     @php
         session()->put('bookmarks.products.view-shops', url()->full());
     @endphp
-    <dl>
-        <dt>Email</dt>
-        <dd>{{ $user->email }}</dd>
-        <dt>Name</dt>
-        <dd>{{ $user->name }}</dd>
-        <dt>Role</dt>
-        <dd>{{ $user->role }}</dd>
-    </dl>
+    <main>
+        <dl>
+            <dt>Email</dt>
+            <dd>{{ $user->email }}</dd>
+            <dt>Name</dt>
+            <dd>{{ $user->name }}</dd>
+            <dt>Role</dt>
+            <dd>{{ $user->role }}</dd>
+        </dl>
+    </main>
 @endsection

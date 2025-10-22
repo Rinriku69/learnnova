@@ -50,7 +50,7 @@ Route::middleware([
                 route::get('/selvesupdate/{userID}', 'selvesUpdateForm')->name('updateForm');
                 route::post('/selvesupdate/{userID}', 'selvesUpdate')->name('update');
             });
-            Route::prefix('/{userID}')->group(static function (): void {
+            Route::prefix('/{user}')->group(static function (): void {
                 route::get('/view', 'view')->name('view');
                 route::post('/delete', 'delete')->name('delete');
                 route::get('/updateForm', 'updateForm')->name('updateForm');
