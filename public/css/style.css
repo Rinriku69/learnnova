@@ -16,17 +16,14 @@
   box-sizing: border-box;
 }
 
-@font-face {
-  font-family: 'MINI';
-  src:url('มินิ/MNMINIMON.ttf') format('truetype'),
-  ;
-  font-weight: normal;
-  font-style: normal;
-}
-
 #app-cmp-body {
-  font-family: MINI;
-  background-color: #f8f9fa;
+  font-family: "Poppins", "Noto Sans Thai", sans-serif;
+  line-height: 1.6;
+  /* ให้ฟอนต์ดูคมขึ้น */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -209,34 +206,49 @@ nav a:hover {
   padding: 1rem 2.5rem;
   color: white;
 }
-.app-cmp-footer h1 {
-  justify-self: left;
-  text-align: left;
-  font-weight: 100;
+.app-f-container {
+  display: grid;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1380px;
+  margin: 0 auto;
+  gap: 2rem;
 }
-.app-f-detai{
-  display: flex;
-  margin-top: 1em;
-  margin-left: .5em;
-}
-.app-f-detai img{
-  width: auto;
-  height: 15px;
-  padding-right: .2em;
-}
-.app-cmp-footer>ul {
-  display: flex;
-  margin-left: 75em;
+.app-f-navlinks {
   list-style: none;
-}
-.app-cmp-footer>ul>li {
   display: flex;
-  list-style: none;
-  padding-right: .5em;
+  gap: 10rem;
+  width: 1280px;
+  padding: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: rgb(101, 97, 134) 1px solid;
+  justify-content: center;
 }
-.app-cmp-footer>ul>li>img {
-  width: auto;
-  height: 40px;
+.app-f-navlinks 
+ul {
+  list-style: none;
+  display: grid;
+  padding-top: 10px;
+  gap: 1ch;
+  &>li>a {
+    text-decoration: none;
+    color: rgb(141, 141, 167);
+    font-size: 1rem;
+    transition: color 0.3s ease;
+    &:hover {
+      color: #ffffff;
+    }
+  }
+}
+.app-f-detai p {
+  justify-self: center;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  font-size: 1rem;
+  color: rgb(141, 141, 167);
 }
 
 /*Login Page*/
@@ -308,60 +320,236 @@ nav a:hover {
     box-shadow: 0 0 0 3px rgba(67, 104, 250, 0.25);
 } 
 
-/* --- Buttons --- */
 
-/* .btn,
-.login-button,
-.logout-button {
-    display: inline-block;
-    padding: 0.8rem 1.5rem;
-    border-radius: var(--border-radius-md);
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    border: none;
-    font-family: var(--font-sans);
-    font-size: 1rem;
+ .quiz-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    /* Adds some space from the header */
     text-align: center;
 }
 
-.btn-primary,
-.login-button {
+.quiz-question {
+    background-color: var(--white-color);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.5rem;
+}
+
+/* Style for the big Japanese character */
+.quiz-question h1 {
+    font-size: 8rem;
+    /* Makes the character very large and easy to see */
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+    line-height: 1;
+}
+
+/* Style for the "Hiragana/Katakana" text */
+.quiz-question .kana-type {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-top: 1rem;
+    text-transform: capitalize;
+    /* Ensures 'hiragana' becomes 'Hiragana' */
+    font-weight: 500;
+}
+
+.quiz-choices {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Creates a 2x2 grid */
+    gap: 1.5rem;
+    /* Space between the buttons */
+}
+
+/* Styling for the choice buttons */
+.choice-btn {
+    background-color: var(--white-color);
+    color: var(--primary-color);
+    border: 2px solid var(--border-color);
+    padding: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 500;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.choice-btn:hover {
     background-color: var(--primary-color);
     color: var(--white-color);
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    /* Adds a subtle lift effect on hover */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.btn-primary:hover,
-.login-button:hover {
-    background-color: var(--primary-hover);
-    text-decoration: none;
+.choice-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.25);
 }
 
-.btn-danger,
-.logout-button {
-    background-color: var(--danger-color);
+.view-result-container {
+    margin-top: 2.5rem;
+    /* Adds space above the button */
+    padding-top: 1.5rem;
+    /* More space */
+    border-top: 1px solid var(--light-gray);
+    /* A subtle separator line */
+    text-align: center;
+    /* Centers the button */
+}
+
+.btn-view-result {
+    display: inline-block;
+    background-color: #6c757d;
+    /* A neutral, secondary color */
     color: var(--white-color);
-}
-
-.btn-danger:hover,
-.logout-button:hover {
-    background-color: var(--danger-hover);
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 50px;
+    /* Pill shape */
+    cursor: pointer;
     text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.form-actions {
+.btn-view-result:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+.results-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    text-align: center;
+}
+
+.results-container h1 {
+    font-size: 2.5rem;
+    color: var(--dark-text);
+    margin-bottom: 1.5rem;
+}
+
+.score-summary {
+    background-color: var(--white-color);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    margin-bottom: 2.5rem;
+}
+
+.score-summary p {
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+    color: var(--medium-text);
+}
+
+.score-circle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #4A90E2, #50E3C2);
+    color: var(--white-color);
+    font-size: 2.5rem;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+}
+
+.answer-review {
+    text-align: left;
+}
+
+.answer-review h2 {
+    font-size: 1.8rem;
+    color: var(--dark-text);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.answer-item {
+    background-color: var(--white-color);
+    border-left: 5px solid;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    margin-bottom: 1rem;
     display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-    margin-top: 2rem;
+    align-items: center;
+    gap: 1.5rem;
 }
 
-a:hover {
-    text-decoration: underline;
-    color: var(--primary-hover);
+.answer-item.correct {
+    border-left-color: #28a745; /* Green */
 }
 
-.app-cmp-inf-course {
-    border: 1px #333 solid;
-} 
- */
+.answer-item.incorrect {
+    border-left-color: #dc3545; /* Red */
+}
+
+.question-character {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--dark-text);
+}
+
+.answer-details {
+    flex-grow: 1; /* Takes up available space */
+}
+
+.answer-details p {
+    margin: 0.25rem 0;
+    font-size: 1.1rem;
+}
+
+.correct-answer-text {
+    color: #28a745;
+}
+
+.answer-icon {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.answer-item.correct .answer-icon {
+    color: #28a745;
+}
+
+.answer-item.incorrect .answer-icon {
+    color: #dc3545;
+}
+
+.results-actions {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.btn-retry-quiz {
+    display: inline-block;
+    background: linear-gradient(45deg, #4A90E2, #50E3C2);
+    color: var(--white-color);
+    border: none;
+    padding: 1rem 3rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.4);
+}
+
+.btn-retry-quiz:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.5);
+}
+  

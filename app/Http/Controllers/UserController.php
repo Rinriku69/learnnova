@@ -10,83 +10,117 @@ use GuzzleHttp\Psr7\ServerRequest;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Psr\Http\Message\ServerRequestInterface;
 
-class UserController extends Controller
+class UserController extends SearchableController
 {
-  
+    const int MAX_ITEMS = 5;
+
+    #[\Override]
+    function getQuery(): Builder | Relation
+    {
+        return User::orderBy('email');
+    }
+
+    #[\Override]
+    function filter(
+        Builder|Relation $query,
+        array $criteria,
+    ): Builder|Relation {
+
+        if (!empty($criteria['term'])) {
+            $query->where(function ($q) use ($criteria) {
+                $q->where('email', 'LIKE', '%' . $criteria['term'] . '%')
+                    ->orWhere('name', 'LIKE', '%' . $criteria['term'] . '%')
+                    ->orWhere('role', 'LIKE', '%' . $criteria['term'] . '%');
+            });
+        }
+      
+        return $query;
+    }
+
+    #[\Override]
     function find(string $code): Model
     {
         return User::where('id', $code)
-        ->orwhere('email',$code)
-        ->firstOrFail();
+            ->orwhere('email', $code)
+            ->firstOrFail();
     }
-    
-    function list(): View{ 
-        $user = User::get();
-         Gate::authorize('list', User::class); 
-        return view('users.list',[
-            'users' => $user
-        ]);
-    }
-    function view(string $userID): View{ 
-        $user = User::where('id',$userID)
-        ->first();
-         Gate::authorize('view', User::class); 
-        return view('users.view',[
-            'user' => $user
-        ]);
-    }
-    function selvesview(): View{ 
-        $email = Auth::user()->email;
-        $user = User::where('email',$email)
-        ->firstorfail();
-        
 
-        return view('users.selve.view',[
+    function list(
+        ServerRequestInterface $request
+    ): View {
+        Gate::authorize('list', User::class);
+        $criteria = $this->prepareCriteria($request->getQueryParams());
+        $query = $this->search($criteria);
+        return view('users.list', [
+            'users' => $query->paginate(self::MAX_ITEMS),
+            'criteria' => $criteria,
+        ]);
+    }
+    function view(string $userID): View
+    {
+        $user = User::where('id', $userID)
+            ->first();
+        Gate::authorize('view', User::class);
+        return view('users.view', [
             'user' => $user
         ]);
-    } 
-    function createForm(): View{ 
-         Gate::authorize('create', User::class); 
+    }
+    function selvesview(): View
+    {
+        $email = Auth::user()->email;
+        $user = User::where('email', $email)
+            ->firstorfail();
+
+
+        return view('users.selve.view', [
+            'user' => $user
+        ]);
+    }
+    function createForm(): View
+    {
+        Gate::authorize('create', User::class);
         return view('users.create-form');
     }
-    function create(ServerRequestInterface $request): RedirectResponse{ 
+    function create(ServerRequestInterface $request): RedirectResponse
+    {
         $data = $request->getParsedBody();
-         Gate::authorize('create', User::class); 
+        Gate::authorize('create', User::class);
         $user = new User();
         $user->fill($data);
         $user->email = $data['email'];
         $user->role = $data['role'];
         $user->save();
         return redirect()->route('users.list')
-        ->with('status','User '.$user->name.' was created');
+            ->with('status', 'User ' . $user->name . ' was created');
     }
 
     function delete(string $user): RedirectResponse
     {
         $user = $this->find($user);
-        Gate::authorize('delete',$user);  
+        Gate::authorize('delete', $user);
         $user->delete();
-       
+
         return redirect(
             session()->get('bookmarks.user.view', route('users.list'))
         )
-        ->with('status','User '.$user->name.' was Deleted');
+            ->with('status', 'User ' . $user->name . ' was Deleted');
     }
 
     function UpdateForm(string $user): View
     {
-          
+
         $user = $this->find($user);
-          Gate::authorize('update', $user);  
-       
+        Gate::authorize('update', $user);
+
         return view('users.updateForm', [
             'user' => $user,
-            
+
         ]);
     }
 
@@ -94,38 +128,39 @@ class UserController extends Controller
         ServerRequestInterface $request,
         string $user,
     ): RedirectResponse {
-       
+
         $data = $request->getParsedBody();
         $user = $this->find($user);
         Gate::authorize('update', $user);
-       $password = $user->password;
+        $password = $user->password;
 
         $user->fill($data);
-        if($user->email !== Auth::user()->email){
-        $user->role = $data['role'];}
-         if($data['password'] !== null){
+        if ($user->email !== Auth::user()->email) {
+            $user->role = $data['role'];
+        }
+        if ($data['password'] !== null) {
             $user->password = $data['password'];
-        }else{
-             $user->password = $password;
-        } 
-      
+        }else {
+            $user->password = $password;
+        }
+
         $user->save();
-      
+
 
         return redirect()->route('users.view', [
             'userID' => $user->id,
-        ])->with('status','User '.$user->name.' was updated');
+        ])->with('status', 'User ' . $user->name . ' was updated');
     }
 
-     function selvesUpdateForm(): View
+    function selvesUpdateForm(): View
     {
-        $user = auth::user()->email;
-        $user = $this->find($user);
-     
-       
+        $user = auth::user();
+
+
+
         return view('users.selve.update', [
             'user' => $user,
-            
+
         ]);
     }
 
@@ -133,24 +168,26 @@ class UserController extends Controller
         ServerRequestInterface $request,
         string $user,
     ): RedirectResponse {
-       
+
         $data = $request->getParsedBody();
         $user = $this->find($user);
-    
-       $password = $user->password;
 
+        $password = $user->password;
         $user->fill($data);
-      
-         if($data['password'] !== null){
-            $user->password = $data['password'];
-        }else{
-            $user->password = $password;
-        } 
-      
-        $user->save();
-       
+        
 
-        return redirect()->route('users.selves.view'
-        )->with('status','User '.$user->name.' was updated');
-    } 
+        
+        if ($data['password'] !== null) {
+            $user->password = $data['password'];
+        }else {
+            $user->password = $password;
+        }
+
+        $user->save();
+
+
+        return redirect()->route(
+            'users.selves.view'
+        )->with('status', 'User ' . $user->name . ' was updated');
+    }
 }

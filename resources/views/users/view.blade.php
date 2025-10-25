@@ -23,7 +23,6 @@
                     </li>
                 @endif
             @endcan
-
         </ul>
     </nav>
 @endsection
@@ -32,12 +31,14 @@
     @php
         session()->put('bookmarks.products.view-shops', url()->full());
     @endphp
-    <dl>
-        <dt>Email</dt>
-        <dd>{{ $user->email }}</dd>
-        <dt>Name</dt>
-        <dd>{{ $user->name }}</dd>
-        <dt>Role</dt>
-        <dd>{{ $user->role }}</dd>
-    </dl>
+    <main>
+        <dl>
+            <dt>Email</dt>
+            <dd>{{ $user->email }}</dd>
+            <dt>Name</dt>
+            <dd>{{ $user->name }}</dd>
+            <dt>Role</dt>
+            <dd>{{ $user->role }}</dd>
+        </dl>
+    </main>
 @endsection

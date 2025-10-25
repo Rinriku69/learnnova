@@ -13,14 +13,26 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Psr\Http\Message\ServerRequestInterface;
 
-class CourseController extends Controller
+class CourseController extends SearchableController
 {
-    function CourseList(): View
+    const int MAX_ITEMS = 5;
+
+    #[\Override]
+    function getQuery(): Builder
     {
-        $course = Course::get();
+        return Course::orderBy('code');
+    }
+
+    function CourseList(
+        ServerRequestInterface $request
+    ): View {
+        /* Gate::authorize('courseList', Course::class); */
+        $criteria = $this->prepareCriteria($request->getQueryParams());
+        $course = $this->search($criteria);
 
         return View('courses.courseList', [
-            'courses' => $course,
+            'courses' => $course->paginate(self::MAX_ITEMS),
+            'criteria' => $criteria,
         ]);
     }
 
@@ -54,14 +66,22 @@ class CourseController extends Controller
             ->with('status', 'Course ' . $course->name . ' was created');
     }
 
-    function ExpertCourseList(): View
-    {
+    function ExpertCourseList(
+        ServerRequestInterface $request
+    ): View {
+        $criteria = $this->prepareCriteria($request->getQueryParams());
+        $query = Course::where('user_id', Auth::id());
+        $filteredQuery = $this->filter($query, $criteria);
 
-        $course = Course::where('user_id', Auth::user()->id)
-            ->get();
+   
+        $courses = $filteredQuery->paginate(self::MAX_ITEMS);
+
         return view(
             'myCourse.expert.list',
-            ['courses' => $course]
+            [
+                'courses' => $courses,
+                'criteria' => $criteria,
+            ]
         );
     }
 
@@ -112,21 +132,25 @@ class CourseController extends Controller
         $course = Course::where('code', $courseCode)
             ->firstorfail();
         Gate::authorize('register', $course);
+
         $user->CourseAsStudent()->attach($course);
         return redirect()->route('courses.myCourse.slist')
             ->with('status', 'Successfully registered');
     }
 
-    function StudentCourseList(): view
-    {
+    function StudentCourseList(
+        ServerRequestInterface $request
+    ): VIEW {
         $user = User::where('id', Auth::user()->id)
             ->firstorfail();
         $course = $user->CourseAsStudent()
             ->with('expert')
             ->get();
+        $criteria = $this->prepareCriteria($request->getQueryParams());
 
         return view('myCourse.student.list', [
-            'courses' => $course
+            'courses' => $course,
+            'criteria' => $criteria,
         ]);
     }
 

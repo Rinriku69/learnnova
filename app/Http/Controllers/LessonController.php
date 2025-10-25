@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Lesson;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
@@ -12,6 +14,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LessonController extends Controller
 {
+
+
     function view(string $lessonID): View
     {
 
@@ -24,7 +28,7 @@ class LessonController extends Controller
 
         return view(
             'courses.content.lesson',
-            ['lesson' => $lesson]
+            ['lesson' => $lesson,]
         );
     }
 

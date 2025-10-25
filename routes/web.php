@@ -6,6 +6,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ManageController;
 use App\Http\Controllers\MyCoursesController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,7 @@ Route::middleware([
         ->name('home.')
         ->group(static function (): void {
             route::get('', 'home')->name('main');
+            route::get('/about', 'about')->name('about.main');
         });
 
     Route::controller(UserController::class) //User&&Authertication
@@ -114,5 +116,15 @@ Route::middleware([
         route::post('/Delete', 'Delete')->name('delete');
          
         });
+    });
+
+    Route::controller(QuizController::class)
+    ->prefix('/quiz')
+    ->name('quiz.')
+    ->group(static function():void{
+        route::get('/start','start')->name('start');
+        route::get('/multipleChoice','quizForm')->name('choice');
+        route::post('/process','process')->name('process');
+        route::get('/result','result')->name('result');
     });
 });
