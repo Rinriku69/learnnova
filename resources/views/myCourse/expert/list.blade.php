@@ -32,6 +32,7 @@
                     @csrf
                 </form>
                 <div class="app-cmp-inf-course">
+                        <b>{{ $course->code }}</b>
                         <b>{{ $course->name }}</b>
                         <a href="{{ route('courses.content', ['courseCode' => $course->code]) }}">View Course</a>
                         <a href="{{ route('courses.manage', ['courseCode' => $course->code]) }}">Manage Course</a>
