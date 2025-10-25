@@ -71,18 +71,15 @@ class CourseController extends SearchableController
     ): View {
         $criteria = $this->prepareCriteria($request->getQueryParams());
         $query = Course::where('user_id', Auth::id());
-        if (!empty($criteria['term'])) {
-            $query->where(function ($q) use ($criteria) {
-                $q->where('name', 'like', '%' . $criteria['term'] . '%') // <-- แก้ตรงนี้
-                    ->orWhere('description', 'like', '%' . $criteria['term'] . '%'); // <-- และแก้ตรงนี้
-            });
-        }
-        $course = $query->get();
+        $filteredQuery = $this->filter($query, $criteria);
+
+   
+        $courses = $filteredQuery->paginate(self::MAX_ITEMS);
 
         return view(
             'myCourse.expert.list',
             [
-                'courses' => $course,
+                'courses' => $courses,
                 'criteria' => $criteria,
             ]
         );
