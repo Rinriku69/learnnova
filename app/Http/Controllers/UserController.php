@@ -35,12 +35,11 @@ class UserController extends SearchableController
         if (!empty($criteria['term'])) {
             $query->where(function ($q) use ($criteria) {
                 $q->where('email', 'LIKE', '%' . $criteria['term'] . '%')
-                    ->orWhere('name', 'LIKE', '%' . $criteria['term'] . '%');
+                    ->orWhere('name', 'LIKE', '%' . $criteria['term'] . '%')
+                    ->orWhere('role', 'LIKE', '%' . $criteria['term'] . '%');
             });
         }
-        if (!empty($criteria['role'])) {
-            $query->where('role', $criteria['role']);
-        }
+      
         return $query;
     }
 
