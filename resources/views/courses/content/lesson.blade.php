@@ -1,9 +1,19 @@
-@extends('layouts.main'
-,['title'=>$lesson->title])
+@extends('layouts.main', ['title' => $lesson->title])
+
+@section('header')
+    <div class="c-header">
+        <div class="cview-backbutton">
+            <a
+                href="{{ session()->get('bookmarks.lesson.view', route('courses.content', ['courseCode' => $lesson->course->code])) }}">&lt;
+                Back</a>
+        </div>
+    </div>
+@endsection
 
 @section('content')
-<pre>{{$lesson->content}}</pre>
-    @if ($lesson->title === 'Hiragana')
-        <a href="{{route('quiz.start')}}">Quiz</a>
-    @endif
+    <div class="les-main">
+        <div class="les-mainC">
+            <p>{{ $lesson->content }}</p>
+        </div>
+    </div>
 @endsection

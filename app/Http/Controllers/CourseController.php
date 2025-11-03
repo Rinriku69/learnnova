@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\User;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +18,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class CourseController extends SearchableController
 {
-    const int MAX_ITEMS = 5;
+    const int MAX_ITEMS = 3;
+    const int LIST = 3;
 
     #[\Override]
     function getQuery(): Builder
@@ -26,13 +30,31 @@ class CourseController extends SearchableController
     function CourseList(
         ServerRequestInterface $request
     ): View {
-        /* Gate::authorize('courseList', Course::class); */
         $criteria = $this->prepareCriteria($request->getQueryParams());
-        $course = $this->search($criteria);
+        $query = $this->search($criteria);
+
+        if (Auth::check()) {
+            $user = Auth::user();
+            if (!$user->isAdministrator()) {
+                
+                $query->where(function ($q) use ($user) {
+                    $q->where('visibility', 'Public')
+                        ->orWhere('user_id', $user->id);
+                });
+            }
+        
+        } else {
+            $query->where('visibility', 'Public');
+        }
+        
+        $course = $query->withAvg('reviews', 'rating')
+                     ->withCount('reviews')
+                     ->paginate(self::LIST);
 
         return View('courses.courseList', [
-            'courses' => $course->paginate(self::MAX_ITEMS),
+            'courses' => $course,
             'criteria' => $criteria,
+
         ]);
     }
 
@@ -40,10 +62,22 @@ class CourseController extends SearchableController
     {
         $course = Course::where('code', $courseCode)
             ->with('expert')
+            ->with('reviews')
             ->firstOrFail();
+        gate::authorize('view', $course);
+        $reviews = $course->reviews()
+            ->inrandomorder()
+            ->limit(3)
+            ->get();
+
+        $reviewCount = $course->reviews?->count() ?? 0;
+        $averageRating = $course->reviews?->avg('rating') ?? 0;
 
         return View('courses.courseView', [
             'course' => $course,
+            'reviewCount' => $reviewCount,
+            'averageRating' => $averageRating,
+            'reviews' => $reviews
         ]);
     }
 
@@ -55,15 +89,26 @@ class CourseController extends SearchableController
 
     function CourseCreate(ServerRequestInterface $request): RedirectResponse
     {
-        $data = $request->getParsedBody();
         Gate::authorize('courseCreate', Course::class);
-        $course = new Course();
-        $course->fill($data);
-        $course->user_id = Auth::user()->id;
-        $course->save();
+        try {
+            $data = $request->getParsedBody();
+            $course = new Course();
+            $course->fill($data);
+            $course->code = $data['code'];
+            $course->user_id = Auth::user()->id;
+            $course->save();
 
-        return redirect()->route('courses.myCourse.elist')
-            ->with('status', 'Course ' . $course->name . ' was created');
+            return redirect()->route('courses.myCourse.elist')
+                ->with('status', 'Course ' . $course->name . ' was created');
+        } catch (QueryException $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->errorInfo[2],
+            ]);
+        } catch (Exception $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => 'Error Occurred',
+            ]);
+        }
     }
 
     function ExpertCourseList(
@@ -72,8 +117,6 @@ class CourseController extends SearchableController
         $criteria = $this->prepareCriteria($request->getQueryParams());
         $query = Course::where('user_id', Auth::id());
         $filteredQuery = $this->filter($query, $criteria);
-
-   
         $courses = $filteredQuery->paginate(self::MAX_ITEMS);
 
         return view(
@@ -99,30 +142,41 @@ class CourseController extends SearchableController
     function CourseUpdate(ServerRequestInterface $request, string $couseCode): RedirectResponse
     {
         $data = $request->getParsedBody();
-        $course = Course::where('code', $couseCode)
-            ->firstorfail();
+        $course = Course::where('code', $couseCode)->firstorfail();
         Gate::authorize('courseUpdate', $course);
-        $course->fill($data);
-        $course->save();
+        try {
+            $course->fill($data);
+            $course->save();
 
-        return redirect()->route(
-            'courses.view',
-            ['courseCode' => $course->code]
-        )
-            ->with('status', 'Course ' . $course->name . ' was updated');
+            return redirect()->route(
+                'courses.view',
+                ['courseCode' => $course->code]
+            )
+                ->with('status', 'Course ' . $course->name . ' was updated');
+        } catch (QueryException $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->errorInfo[2],
+            ]);
+        }
     }
 
 
     function CourseDelete(string $courseCode): RedirectResponse
     {
-        /* dd($courseCode); */
         $course = Course::where('code', $courseCode)
             ->FirstOrFail();
         Gate::authorize('courseDelete', $course);
-        $course->delete();
+        try {
+            /* dd($courseCode); */
+            $course->delete();
 
-        return redirect()->route('courses.myCourse.elist')
-            ->with('status', 'Course ' . $course->name . ' was deleted');
+            return redirect()->route('courses.myCourse.elist')
+                ->with('status', 'Course ' . $course->name . ' was deleted');
+        } catch (QueryException $excp) {
+            return redirect()->back()->withErrors([
+                'alert' => $excp->errorInfo[2],
+            ]);
+        }
     }
 
     function CourseRegister(string $courseCode): RedirectResponse
@@ -143,13 +197,13 @@ class CourseController extends SearchableController
     ): VIEW {
         $user = User::where('id', Auth::user()->id)
             ->firstorfail();
-        $course = $user->CourseAsStudent()
-            ->with('expert')
-            ->get();
+        $courses = $user->CourseAsStudent();
         $criteria = $this->prepareCriteria($request->getQueryParams());
+        $filteredQuery = $this->filter($courses, $criteria);
+        $courses = $filteredQuery->paginate(self::MAX_ITEMS);
 
         return view('myCourse.student.list', [
-            'courses' => $course,
+            'courses' => $courses,
             'criteria' => $criteria,
         ]);
     }
@@ -190,6 +244,7 @@ class CourseController extends SearchableController
         $course  = Course::with('lessons')
             ->where('code', $courseCode)
             ->firstorfail();
+        Gate::authorize('courseContentView',$course);
         $lessons = $course->lessons;
 
 

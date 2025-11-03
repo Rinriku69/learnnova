@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Course;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class CoursePolicy
 {
@@ -15,19 +16,25 @@ class CoursePolicy
         //
     }
 
-
+    function view(User $user, Course $course) :bool{
+        return $course->visibility == 'Public' || $course->user_id === Auth::user()->id
+        || $user->isAdministrator();
+    }
+    function list(User $user, Course $course) :bool{
+        return $this->view($user,$course);
+    }
 
     function register(User $user, Course $course): bool
     {
-        return $user->isStudent() && !$course->students()->where('user_id', $user->id)->exists();
+        return $user->isStudent() && !$course->students()->where('user_id', $user->id)->exists()
+        && $course->visibility == 'Public';
     }
 
     public function courseDelete(User $user, Course $course): bool
     {
 
         if ($user->isAdministrator()) {
-            /*  $studentQuery = $course->students();
-        dd($studentQuery->toSql(), $studentQuery->getBindings()); */ //debug
+            
             return !$course->students()->exists();
         }
 
@@ -38,6 +45,8 @@ class CoursePolicy
 
         return false;
     }
+
+   
 
     function courseManipulate(User $user): bool
     {
@@ -67,6 +76,11 @@ class CoursePolicy
 
         return false;
     }
+
+     public function visibility(User $user, Course $course): bool
+     {
+       return $this->courseUpdate($user,$course);
+     }
 
     function ExpertCourseList(User $user): bool
     {
@@ -99,6 +113,10 @@ class CoursePolicy
     function lessonCreate(User $user, Course $course): bool
     {
         return $this->courseUpdate($user,$course);
+    }
+    function lessonUpdate(User $user, Course $course): bool
+    {
+        return $this->lessonCreate($user,$course);
     }
     function courseReview(User $user, Course $course): bool
     {

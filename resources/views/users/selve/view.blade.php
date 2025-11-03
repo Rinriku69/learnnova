@@ -3,35 +3,30 @@
 ])
 
 @section('header')
-  <nav>
+    <nav class="user-header">
         <ul>
-
-            {{-- <li>
-                <a href="{{ session()->get('bookmarks.users.selves.view', route('products.list')) }}">&lt; Back</a>
-            </li> --}}
-
-            
             <li>
-                <a
-                    href="{{route('users.selves.updateForm',['userID'=>$user->id])}}">Update</a>
+                <a href="{{ session()->get('bookmarks.users.selves.view', route('home.main')) }}">&lt; Back</a>
             </li>
-            
-           
+            <li>
+                <a href="{{ route('users.selves.updateForm') }}">Update</a>
+            </li>
         </ul>
-    </nav> 
+    </nav>
 @endsection
 
 @section('content')
-    {{-- @php
-        session()->put('bookmarks.products.view-shops', url()->full());
-    @endphp --}}
-    <img src="{{asset('img/user/'.$user->img)}}" alt="Yes">
-    <dl>
-        <dt>Email</dt>
-        <dd>{{ $user->email }}</dd>
-        <dt>Name</dt>
-        <dd>{{ $user->name }}</dd>
-        <dt>Role</dt>
-        <dd>{{ $user->role }}</dd>
-    </dl>
+    <div class="user-main">
+        <div class="user-contmain">
+            <img src="{{ asset('img/user/' . $user->img) }}" alt="Yes">
+            <dl>
+                <dt>Email</dt>
+                <dd>{{ $user->email }}</dd>
+                <dt>Name</dt>
+                <dd>{{ $user->name }}</dd>
+                <dt>Role</dt>
+                <dd>{{ $user->role }}</dd>
+            </dl>
+        </div>
+    </div>
 @endsection

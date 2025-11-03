@@ -3,49 +3,59 @@
 ])
 
 @section('content')
-    <main>
-        <div class="app-cmp-about-header">
-            <h1>About Learnnova</h1>
-            <p>
-                We're on a mission to transform lives through accessible, high-quality education. Join us in building a
-                world where learning knows no boundaries.
-            </p>
+    <main class="about-main">
+        <div class="about-header">
+            <div class="about-headercon">
+                <h1>About Learnnova</h1>
+                <p>
+                    We're on a mission to transform lives through accessible, high-quality education. Join us in building a
+                    world where learning knows no boundaries.
+                </p>
+            </div>
         </div>
-        <div class="app-cmp-about-mission">
-            <h2>Our Story</h2>
-            <p>
-                Founded in 2020, Learnnova was born from a simple idea: everyone deserves access to world-class education.
-                What started as a small platform with a handful of courses has grown into a global learning community.
-            </p>
-            <p>
-                Today, we serve over 50,000 students worldwide, partnering with industry experts and leading companies to
-                deliver courses that matter. Our platform combines cutting-edge technology with pedagogical excellence to
-                create engaging, effective learning experiences.
-            </p>
-            <p>
-                We're not just building a platform; we're building a movement. A movement that believes in the power of
-                education to transform lives, communities, and the world.
-            </p>
+        <div class="about-mission">
+            <div class="about-missioncon">
+                <h2>Our Story</h2>
+                <p>
+                    Founded in 2020, Learnnova was born from a simple idea: everyone deserves access to world-class
+                    education.
+                    What started as a small platform with a handful of courses has grown into a global learning community.
+                </p>
+                <p>
+                    Today, we serve over 50,000 students worldwide, partnering with industry experts and leading companies
+                    to
+                    deliver courses that matter. Our platform combines cutting-edge technology with pedagogical excellence
+                    to
+                    create engaging, effective learning experiences.
+                </p>
+                <p>
+                    We're not just building a platform; we're building a movement. A movement that believes in the power of
+                    education to transform lives, communities, and the world.
+                </p>
+            </div>
+            <img src="{{ asset('img\img_anouther\teamwork.png') }}" alt="About Teamwork Image">
         </div>
-        <div class="app-cmp-about-values">
+        <div class="about-values">
             <h2>Our Values</h2>
             <p>These core values guide everything we do at Learnnova</p>
             <ul>
-                <li><b>Our Mission</b> To democratize education and make high-quality learning accessible to everyone,
-                    anywhere.</li>
-                <li><b>Our Passion</b> We believe in the transformative power of education and lifelong learning.</li>
-                <li><b>Our Community</b> Building a global community of learners, educators, and industry experts.</li>
-                <li><b>Our Commitment</b> Delivering excellence in every course through rigorous quality standards.</li>
+                <li>
+                    <p><b>Our Mission</b> To democratize education and make high-quality learning accessible to everyone,
+                        anywhere.</p>
+                </li>
+                <li><p><b>Our Passion</b> We believe in the transformative power of education and lifelong learning.</p></li>
+                <li><p><b>Our Community</b> Building a global community of learners, educators, and industry experts.</p></li>
+                <li><p><b>Our Commitment</b> Delivering excellence in every course through rigorous quality standards.</p></li>
             </ul>
         </div>
-        <div>
-            <div>
+        <div class="about-achiev-container">
+            <div class="about-achiev-header">
                 <h2>Our Achievements</h2>
                 <p>
                     Milestones that reflect our commitment to excellence
                 </p>
             </div>
-            <div>
+            <div class="about-achiev-table">
                 <table>
                     <tbody>
                         <tr>
@@ -62,7 +72,7 @@
                 </table>
             </div>
         </div>
-        <div>
+        <div class="about-joinus">
             <h2>Join Us</h2>
             <p>
                 Whether you're a student eager to learn, an educator passionate about teaching, or a company looking to

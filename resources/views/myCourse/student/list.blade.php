@@ -3,33 +3,33 @@
 ])
 
 @section('header')
+<div class="mc-header">
     <search>
         <form action="{{ route('courses.myCourse.slist') }}" method="GET" class="app-cmp-search-form">
-            <div>
-                <b>Search</label>
+            <div class="clist-search-group">
+                <label for="app-inp-search-term">Search</label>
                 <input type="text" name="term" placeholder="Search courses..." value="{{ $criteria['term'] }}">
                 <button type="submit" class="primary">Search</button>
                 <a href="{{ route('courses.myCourse.slist') }}">
-                    <button type="button" class="accent">
                         Clear
-                    </button>
                 </a>
             </div>
         </form>
+    <div class="page-link">
+    {{ $courses->withQueryString()->links() }}
+    </div>
     </search>
-    @can('courseCreate', \App\Models\Course::class)
-        <a href="{{ route('courses.createForm') }}">Add new course</a>
-    @endcan
+</div>
 @endsection
 
     
 
 @section('content')
-    <main>
-        <div class="container">
-            <div class="wrapper">
+    <main class="mc-main">
+        <div class="mc-container">
+            <div class="mc-wrapper">
                 @foreach ($courses as $course)
-                    <div class="app-cmp-inf-course">
+                    <div class="mc-inf-course">
                     <b>{{$course->code}}</b>
                     <b>{{$course->name}}</b>
                     <b>By {{$course->expert->name}}</b>

@@ -3,16 +3,14 @@
 ])
 
 @section('header')
-    <nav>
+    <nav class="user-vheader">
         <form action="{{ route('users.delete', ['userID' => $user->id]) }}" method="post" id="app-form-delete">
             @csrf
         </form>
         <ul>
-
             <li>
                 <a href="{{ route('users.list') }}">&lt; Back</a>
             </li>
-
             <li>
                 <a href="{{ route('users.updateForm', ['userID' => $user->id]) }}">Update</a>
             </li>
@@ -31,7 +29,7 @@
     @php
         session()->put('bookmarks.products.view-shops', url()->full());
     @endphp
-    <main>
+    <main class="us-view-main">
         <dl>
             <dt>Email</dt>
             <dd>{{ $user->email }}</dd>

@@ -6,6 +6,7 @@ use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
+use Exception;
 use GuzzleHttp\Psr7\ServerRequest;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,6 +16,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
 
 class UserController extends SearchableController
 {
@@ -26,7 +28,7 @@ class UserController extends SearchableController
         return User::orderBy('email');
     }
 
-    #[\Override]
+     #[\Override]
     function filter(
         Builder|Relation $query,
         array $criteria,
@@ -39,9 +41,18 @@ class UserController extends SearchableController
                     ->orWhere('role', 'LIKE', '%' . $criteria['term'] . '%');
             });
         }
-      
+
         return $query;
     }
+ 
+    /* #[\Override]
+    function applyWhereToFilterByTerm(Builder $query, string $word): void
+    {
+        $query
+        ->where('email', 'LIKE', "%{$word}%")
+        ->orWhere('name', 'LIKE', "%{$word}%")
+        ->orWhere('role', 'LIKE', "%{$word}%");
+    } */
 
     #[\Override]
     function find(string $code): Model
@@ -82,34 +93,24 @@ class UserController extends SearchableController
             'user' => $user
         ]);
     }
-    function createForm(): View
-    {
-        Gate::authorize('create', User::class);
-        return view('users.create-form');
-    }
-    function create(ServerRequestInterface $request): RedirectResponse
-    {
-        $data = $request->getParsedBody();
-        Gate::authorize('create', User::class);
-        $user = new User();
-        $user->fill($data);
-        $user->email = $data['email'];
-        $user->role = $data['role'];
-        $user->save();
-        return redirect()->route('users.list')
-            ->with('status', 'User ' . $user->name . ' was created');
-    }
+    
 
     function delete(string $user): RedirectResponse
     {
         $user = $this->find($user);
         Gate::authorize('delete', $user);
-        $user->delete();
+        try {
+            $user->delete();
 
-        return redirect(
-            session()->get('bookmarks.user.view', route('users.list'))
-        )
-            ->with('status', 'User ' . $user->name . ' was Deleted');
+            return redirect(
+                session()->get('bookmarks.user.view', route('users.list'))
+            )
+                ->with('status', 'User ' . $user->name . ' was Deleted');
+        } catch (QueryException $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->errorInfo[2],
+            ]);
+        }
     }
 
     function UpdateForm(string $user): View
@@ -132,24 +133,38 @@ class UserController extends SearchableController
         $data = $request->getParsedBody();
         $user = $this->find($user);
         Gate::authorize('update', $user);
-        $password = $user->password;
+        try {
+            $password = $user->password;
 
-        $user->fill($data);
-        if ($user->email !== Auth::user()->email) {
-            $user->role = $data['role'];
+            $user->fill($data);
+            if ($user->email !== Auth::user()->email) {
+                $user->role = $data['role'];
+            }
+            if ($data['password'] !== null) {
+                $user->password = $data['password'];
+            } else {
+                $user->password = $password;
+            }
+
+            $user->save();
+
+
+            return redirect()->route('users.view', [
+                'userID' => $user->id,
+            ])->with('status', 'User ' . $user->name . ' was updated');
+        } catch (QueryException $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->errorInfo[2],
+            ]);
+        }catch (Exception $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->getMessage(),
+            ]);
+        }catch (Throwable $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->getMessage(),
+            ]);
         }
-        if ($data['password'] !== null) {
-            $user->password = $data['password'];
-        }else {
-            $user->password = $password;
-        }
-
-        $user->save();
-
-
-        return redirect()->route('users.view', [
-            'userID' => $user->id,
-        ])->with('status', 'User ' . $user->name . ' was updated');
     }
 
     function selvesUpdateForm(): View
@@ -166,28 +181,42 @@ class UserController extends SearchableController
 
     function selvesUpdate(
         ServerRequestInterface $request,
-        string $user,
+       
     ): RedirectResponse {
 
         $data = $request->getParsedBody();
-        $user = $this->find($user);
+        $userID = Auth::user()->id;
+        $user = User::where('id',$userID)->firstorfail();
+        try {
+            $password = $user->password;
+            $user->fill($data);
 
-        $password = $user->password;
-        $user->fill($data);
-        
 
-        
-        if ($data['password'] !== null) {
-            $user->password = $data['password'];
-        }else {
-            $user->password = $password;
+
+            if ($data['password'] !== null) {
+                $user->password = $data['password'];
+            } else {
+                $user->password = $password;
+            }
+
+            $user->save();
+
+
+            return redirect()->route(
+                'users.selves.view'
+            )->with('status', 'User ' . $user->name . ' was updated');
+        } catch (QueryException $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->errorInfo[2],
+            ]);
+        }catch (Exception $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->getMessage(),
+            ]);
+        }catch (Throwable $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->getMessage(),
+            ]);
         }
-
-        $user->save();
-
-
-        return redirect()->route(
-            'users.selves.view'
-        )->with('status', 'User ' . $user->name . ' was updated');
     }
 }

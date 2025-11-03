@@ -25,33 +25,24 @@
         </div>
     </header>
 
-
     <div class="login-container">
-
-
         <form action="{{ route('authenticate') }}" method="post" class="login-form">
             @csrf
-
             <div class="form-header">
                 <h1>Welcome Back</h1>
                 <p>Please enter your details to sign in.</p>
             </div>
-
             <div class="form-group">
-
                 <label for="email">E-mail</label>
                 <input type="email" id="email" name="email" class="form-control" required />
             </div>
-
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" class="form-control" required />
             </div>
             <br>
+            <button type="submit" class="login-button">Login</button>
             <a href="{{ route('registerForm') }}">Register</a><br>
-
-            <button type="submit" class="login-button w-full">Login</button>
-
             <div class="app-cmp-notifications">
                 @error('credentials')
                     <div role="alert">
@@ -59,10 +50,7 @@
                     </div>
                 @enderror
             </div>
-
         </form>
     </div>
-
 </body>
-
 </html>

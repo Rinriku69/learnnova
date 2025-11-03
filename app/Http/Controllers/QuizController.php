@@ -60,6 +60,7 @@ class QuizController extends Controller
             'user_choiceID' => (int) $data['choice']
         ];
         session()->put('quiz_answers', $answer_collect);
+       
         session()->forget('correct_answer');
 
 

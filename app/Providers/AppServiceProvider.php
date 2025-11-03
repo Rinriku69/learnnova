@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,9 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        \Illuminate\Pagination\Paginator
-            ::defaultView('vendor.pagination.default');
-        \Illuminate\Pagination\Paginator
-            ::defaultSimpleView('vendor.pagination.simple-default');
+        Paginator::defaultView('vendor.pagination.default');
+        Paginator::defaultSimpleView('vendor.pagination.simple-default');
+        Paginator::useBootstrapFive();
     }
 }

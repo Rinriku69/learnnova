@@ -3,6 +3,7 @@
 @section('content')
    
     <div class="quiz-container">
+        
         <h1>Question : {{ $question_number }}</h1>
         <div class="quiz-question">
             <h1>{{ $question }}</h1>

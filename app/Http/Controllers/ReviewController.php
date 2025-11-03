@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use App\Models\Review;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use Psr\Http\Message\ServerRequestInterface;
+use Throwable;
 
 class ReviewController extends Controller
 {
     function create(string $courseCode): View|RedirectResponse
     {
-
         $course = Course::where('code', $courseCode)->firstOrFail();
         Gate::authorize('courseReview',$course);
         $userId = Auth::user()->id;
@@ -55,7 +57,7 @@ class ReviewController extends Controller
     function update(ServerRequestInterface $request, Review $review): RedirectResponse
     {
         // Gate::authorize('courseCreate', $review);
-
+        try {
         $data = $request->getParsedBody();
 
         $review->fill($data);
@@ -63,10 +65,24 @@ class ReviewController extends Controller
 
         return redirect()->route('courses.content', ['courseCode' => $review->course->code])
             ->with('status', 'Review was updated.');
+        } catch (ModelNotFoundException $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->getMessage(),
+            ]);
+        } catch (Exception $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->getMessage(),
+            ]);
+        }catch (Throwable $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->getMessage(),
+            ]);
+        }
     }
 
     function destroy(Review $review): RedirectResponse
     {
+        try {
         // Gate::authorize('courseCreate', $review);
 
         $course = $review->course;
@@ -74,5 +90,10 @@ class ReviewController extends Controller
 
         return redirect()->route('courses.content', ['courseCode' => $course->code])
             ->with('status', 'Review was deleted.');
+        } catch (Throwable $excp) {
+            return redirect()->back()->withErrors([
+                'alert' => $excp->getMessage(),
+            ]);
+        }
     }
 }
