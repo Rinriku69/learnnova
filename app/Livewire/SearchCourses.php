@@ -24,15 +24,11 @@ class SearchCourses extends Component
         $this->searchTerm = $searchTerm;
     } 
    
-    /**
-     * ฟังก์ชัน render() มีหน้าที่แค่แสดง View
-     * เราไม่จำเป็นต้องใส่ Logic ค้นหาในนี้ เพราะเราจัดการใน updatedSearchTerm() แล้ว
-     */
+    
     public function render()
     {
-        $courses = collect(); // สร้าง Collection ว่างๆ ไว้เป็นค่าเริ่มต้น
+        $courses = collect(); 
 
-        // ถ้าผู้ใช้พิมพ์อย่างน้อย 2 ตัวอักษร
         if (strlen($this->searchTerm) >= 2) {
             $courses = Course::where('name', 'like', '%' . $this->searchTerm . '%')
                 ->orWhere('code', 'like', '%' . $this->searchTerm . '%')
