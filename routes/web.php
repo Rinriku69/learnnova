@@ -88,8 +88,22 @@ Route::middleware([
                     route::get('/Content', 'CourseContentView')->name('content');
                     route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
                     Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.createForm');
+
+                    
                 });
             });
+
+        Route::controller(ReviewController::class)
+        ->prefix('/reviews')
+        ->name('reviews.')
+        ->group(static function (): void {
+            Route::prefix('/{review}')->group(static function (): void {
+                route::get('/edit', 'edit')->name('edit');
+                route::post('/update', 'update')->name('update');
+               
+                route::post('/delete', 'destroy')->name('destroy');
+            });
+        });
 
     Route::controller(LessonController::class)
         ->prefix('/lesson')
