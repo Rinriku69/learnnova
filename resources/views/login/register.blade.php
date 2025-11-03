@@ -11,7 +11,7 @@
                 <div class="regis-form-container">
                     <div class="form-group">
                         <label for="username">Username:</label>
-                        <input type="text" id="username" name="name" required>
+                        <input type="text" id="username" name="name" value="{{old('name','')}}" required>
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>

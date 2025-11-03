@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,6 +61,7 @@ class LoginController extends Controller
     }
 
     function register(ServerRequestInterface $request): RedirectResponse{
+        try{
         $data = $request->getParsedBody();
 
         $user = new User();
@@ -70,7 +72,11 @@ class LoginController extends Controller
 
         return redirect()->route('login')
         ->with('status','Successfully Registered please Login');
-
+        }catch (QueryException $excp) {
+            return redirect()->back()->withInput()->withErrors([
+                'alert' => $excp->errorInfo[2],
+            ]);
+        }
 
     }
 }
