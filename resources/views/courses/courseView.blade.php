@@ -46,11 +46,11 @@
                             Reviews)</h4>
                         @foreach ($reviews as $review)
                             <div>
-                                {{ $review->user->name }} :
+                                {{ $review->user->name }} : {{number_format($review->rating,2)}}
                                 <br>
                                 {{ $review->comment }}
                                 <br>
-                                <i>review at: {{ $review->created_at }}</i>
+                                <i>reviewed at: {{ $review->created_at }}</i>
                                 <br>
                                 <br>
                             </div>

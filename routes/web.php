@@ -93,7 +93,7 @@ Route::middleware([
                 });
             });
 
-        Route::controller(ReviewController::class)
+    Route::controller(ReviewController::class)
         ->prefix('/reviews')
         ->name('reviews.')
         ->group(static function (): void {
