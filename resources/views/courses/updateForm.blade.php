@@ -23,7 +23,7 @@
             </label>
             <label><br>
                 <b>Image Name</b>
-                <input type="text" name="img" value=""{{ old('img', $course->img) }}>
+                <input type="text" name="img" value="{{ old('img', $course->img) }}">
             </label><br>
 
             <button type="submit">Update</button>

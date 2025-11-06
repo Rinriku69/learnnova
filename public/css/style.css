@@ -1,14 +1,6 @@
-/* 
-    --primary-color: #4a90e2;
-    --primary-hover: #357ABD;
-    --danger-color: #d9534f;
-    --danger-hover: #c9302c;
-    --light-bg: #f8f9fa;
-    --dark-footer: #343a40;
-    --text-color: #333;
-    --border-color: #dee2e6;
-    --white-color: #ffffff;
-*/
+
+
+
 
 * {
     margin: 0;
@@ -639,7 +631,6 @@ main {
     color: var(--white-color);
     border-color: var(--primary-color);
     transform: translateY(-5px);
-    /* Adds a subtle lift effect on hover */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -650,26 +641,20 @@ main {
 
 .view-result-container {
     margin-top: 2.5rem;
-    /* Adds space above the button */
     padding-top: 1.5rem;
-    /* More space */
     border-top: 1px solid var(--light-gray);
-    /* A subtle separator line */
     text-align: center;
-    /* Centers the button */
 }
 
 .btn-view-result {
     display: inline-block;
     background-color: #6c757d;
-    /* A neutral, secondary color */
     color: var(--white-color);
     border: none;
     padding: 0.8rem 2rem;
     font-size: 1rem;
     font-weight: 500;
     border-radius: 50px;
-    /* Pill shape */
     cursor: pointer;
     text-decoration: none;
     transition: background-color 0.3s ease, transform 0.2s ease;

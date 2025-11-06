@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Course;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -125,5 +126,17 @@ class CoursePolicy
             return $course->students()->where('user_id', $user->id)->exists();
         }
         return false;
+    }
+
+    public function updateReview(User $user, Review $review): bool
+    {
+    
+        return $user->id === $review->user_id || $user->isAdministrator();
+    }
+
+    public function deleteReview(User $user, Review $review): bool
+    {
+        
+        return $this->updateReview($user, $review);
     }
 }

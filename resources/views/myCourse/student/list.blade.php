@@ -25,6 +25,9 @@
     
 
 @section('content')
+@php
+    session()->put('bookmarks.courses.content', url()->full());
+@endphp
     <main class="mc-main">
         <div class="mc-container">
             <div class="mc-wrapper">

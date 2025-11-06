@@ -49,14 +49,15 @@ class ReviewController extends Controller
 
     function edit(Review $review): View
     {
-        // Gate::authorize('courseCreate', $review);
+        
+        
 
         return View('reviews.formUpdate', compact('review'));
     }
 
     function update(ServerRequestInterface $request, Review $review): RedirectResponse
     {
-        // Gate::authorize('courseCreate', $review);
+        
         try {
         $data = $request->getParsedBody();
 
@@ -82,8 +83,8 @@ class ReviewController extends Controller
 
     function destroy(Review $review): RedirectResponse
     {
+        
         try {
-        // Gate::authorize('courseCreate', $review);
 
         $course = $review->course;
         $review->delete();
