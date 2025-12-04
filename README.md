@@ -6,8 +6,8 @@
 
 **LearnNova** is a comprehensive web-based E-Learning platform built with the **Laravel Framework**. It provides a dynamic environment where **Experts** can create and manage courses, while **Students** can browse, enroll, and take lessons with interactive features.
 
-![LearnNova Banner](public/img/logo_icon/DS.jpg)
-*(Replace this path with a screenshot of your actual homepage for a better first impression)*
+![LearnNova Banner](public/img/logo_icon/home.png)
+
 
 ## 🌟 Key Features
 
